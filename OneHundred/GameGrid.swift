@@ -8,87 +8,13 @@
 
 import Foundation
 
-struct GridCell
-{
-    let position: (row: Int, column: Int)
-    var row: Int {
-        return position.row
-    }
-    var column: Int {
-        return position.column
-    }
-    
-    var isActive = false
-    var isPossible = false
-    var isUsed = false
-    
-    // A reference to the grid container
-    private var mainGrid: GameGrid?
-    
-    init?(atRow row: Int, andColumn column: Int, inGrid grid: GameGrid) {
-        self.mainGrid = grid
-        if mainGrid?[row, column] == nil {
-            self.position = (row, column)
-        } else {
-            // Cell already created at (row, column)
-            return nil
-        }
-    }
-    
-    init?(atPosition position: (row: Int, column: Int), inGrid grid: GameGrid) {
-        self.mainGrid = grid
-        if mainGrid?[position] == nil {
-            self.position = position
-        } else {
-            // Cell already created at (row, column)
-            return nil
-        }
-    }
-    
-    enum DiagonalDirection {
-        case upLeft
-        case upRight
-        case downLeft
-        case downRight
-    }
-    
-    func left() -> GridCell? {
-        let leftCell = mainGrid?[position.row, position.column-1]
-        return leftCell
-    }
-    func right() -> GridCell? {
-        let righCell = mainGrid?[position.row, position.column+1]
-        return righCell
-    }
-    func up() -> GridCell? {
-        let upCell = mainGrid?[position.row-1, position.column]
-        return upCell
-    }
-    func down() -> GridCell? {
-        let downCell = mainGrid?[position.row+1, position.column]
-        return downCell
-    }
-    func diagonal(direction: DiagonalDirection) -> GridCell? {
-        switch direction {
-        case .upLeft:
-            return self.up()?.left()
-        case .upRight:
-            return self.up()?.right()
-        case .downLeft:
-            return self.down()?.left()
-        case .downRight:
-            return self.down()?.right()
-        }
-    }
-}
-
 class GameGrid
 {
     let numberOfRows: Int
     let numberOfColumns: Int
     
     // Arrays of arrays for implementing the matrix
-    var mainGrid: [[GridCell?]]
+    private var mainGrid: [[GridCell?]]
     
     init?(withRows numberOfRows: Int, andColumns numberOfColumns: Int)
     {
@@ -99,18 +25,17 @@ class GameGrid
         self.numberOfRows = numberOfRows
         self.numberOfColumns = numberOfColumns
         
-        mainGrid = [[GridCell?]]()
+        //TODO Refactoring double-dimentional grid in single-dimentional array
+        mainGrid = Array<[GridCell?]>(repeating: Array<GridCell?>(repeating: nil, count: numberOfColumns), count: numberOfRows)
         for rowIndex in 0..<numberOfRows {
-            var row = [GridCell?]()
             for columnIndex in 0..<numberOfColumns {
-                let cell = GridCell(atPosition: (rowIndex, columnIndex), inGrid: self)
-                row.append(cell)
+                // In this case bounds are not checked
+                mainGrid[rowIndex][columnIndex] = GridCell(atRow: rowIndex, andColumn: columnIndex, inGrid: self)
             }
-            mainGrid.append(row)
         }
     }
     
-    func isValidCellIndex(row: Int, column: Int) -> Bool
+    private func isValidCellIndex(row: Int, column: Int) -> Bool
     {
         return row >= 0 && row < numberOfRows && column >= 0 && column < numberOfColumns
     }
