@@ -8,13 +8,6 @@
 
 import Foundation
 
-enum DiagonalDirection {
-    case upLeft
-    case upRight
-    case downLeft
-    case downRight
-}
-
 struct GridCell
 {
     let position: (row: Int, column: Int)
@@ -32,14 +25,31 @@ struct GridCell
     // A reference to the grid container
     private var mainGrid: GameGrid?
     
-    init(atRow row: Int, andColumn column: Int, inGrid grid: GameGrid) {
-        self.position = (row, column)
+    init?(atRow row: Int, andColumn column: Int, inGrid grid: GameGrid) {
         self.mainGrid = grid
+        if mainGrid?[row, column] == nil {
+            self.position = (row, column)
+        } else {
+            // Cell already created at (row, column)
+            return nil
+        }
     }
     
-    init(atPosition position: (Int, Int), inGrid grid: GameGrid) {
-        self.position = position
+    init?(atPosition position: (row: Int, column: Int), inGrid grid: GameGrid) {
         self.mainGrid = grid
+        if mainGrid?[position] == nil {
+            self.position = position
+        } else {
+            // Cell already created at (row, column)
+            return nil
+        }
+    }
+    
+    enum DiagonalDirection {
+        case upLeft
+        case upRight
+        case downLeft
+        case downRight
     }
     
     func left() -> GridCell? {
@@ -77,7 +87,8 @@ class GameGrid
     let numberOfRows: Int
     let numberOfColumns: Int
     
-    var mainGrid: [[GridCell]]
+    // Arrays of arrays for implementing the matrix
+    var mainGrid: [[GridCell?]]
     
     init?(withRows numberOfRows: Int, andColumns numberOfColumns: Int)
     {
@@ -88,9 +99,9 @@ class GameGrid
         self.numberOfRows = numberOfRows
         self.numberOfColumns = numberOfColumns
         
-        mainGrid = [[GridCell]]()
+        mainGrid = [[GridCell?]]()
         for rowIndex in 0..<numberOfRows {
-            var row = [GridCell]()
+            var row = [GridCell?]()
             for columnIndex in 0..<numberOfColumns {
                 let cell = GridCell(atPosition: (rowIndex, columnIndex), inGrid: self)
                 row.append(cell)
@@ -115,7 +126,27 @@ class GameGrid
         }
         set {
             if isValidCellIndex(row: row, column: column) {
-                mainGrid[row][column] = newValue! // This will crash if newValue = nil
+                mainGrid[row][column] = newValue
+            }
+        }
+    }
+    
+    subscript(position: (row: Int, column: Int)) -> GridCell?
+    {
+        get {
+            let newRow = position.row
+            let newColumn = position.column
+            if isValidCellIndex(row: newRow, column: newColumn) {
+                return mainGrid[newRow][newColumn]
+            } else {
+                return nil
+            }
+        }
+        set {
+            let newRow = position.row
+            let newColumn = position.column
+            if isValidCellIndex(row: newRow, column: newColumn) {
+                mainGrid[newRow][newColumn] = newValue
             }
         }
     }
