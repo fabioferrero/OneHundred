@@ -14,7 +14,7 @@ class ViewController: UIViewController
     @IBOutlet weak var cellsGrid: UIStackView!
     
     // The model for the gameGrid
-    let gameGrid = GameGrid(withRows: 10, andColumns: 10)
+    let gameGrid = GameGrid(withRows: 10, andColumns: 10)!
     
     override func viewDidLoad() {
         super.viewDidLoad()

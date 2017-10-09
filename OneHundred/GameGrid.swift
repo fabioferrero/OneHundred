@@ -14,7 +14,7 @@ class GameGrid
     let numberOfColumns: Int
     
     // Arrays of arrays for implementing the matrix
-    private var mainGrid: [[GridCell?]]
+    private var mainGrid: [GridCell?]
     
     init?(withRows numberOfRows: Int, andColumns numberOfColumns: Int)
     {
@@ -25,12 +25,12 @@ class GameGrid
         self.numberOfRows = numberOfRows
         self.numberOfColumns = numberOfColumns
         
-        //TODO Refactoring double-dimentional grid in single-dimentional array
-        mainGrid = Array<[GridCell?]>(repeating: Array<GridCell?>(repeating: nil, count: numberOfColumns), count: numberOfRows)
+        // Matrix Initialization
+        mainGrid = Array<GridCell?>(repeating: nil, count: numberOfRows * numberOfColumns)
         for rowIndex in 0..<numberOfRows {
             for columnIndex in 0..<numberOfColumns {
                 // In this case bounds are not checked
-                mainGrid[rowIndex][columnIndex] = GridCell(atRow: rowIndex, andColumn: columnIndex, inGrid: self)
+                mainGrid[matrixIndex(rowIndex, columnIndex)] = GridCell(atRow: rowIndex, andColumn: columnIndex, inGrid: self)
             }
         }
     }
@@ -40,18 +40,22 @@ class GameGrid
         return row >= 0 && row < numberOfRows && column >= 0 && column < numberOfColumns
     }
     
+    private func matrixIndex(_ row: Int, _ column: Int) -> Int {
+        return row * numberOfColumns + column
+    }
+    
     subscript(row: Int, column: Int) -> GridCell?
     {
         get {
             if isValidCellIndex(row: row, column: column) {
-                return mainGrid[row][column]
+                return mainGrid[matrixIndex(row, column)]
             } else {
                 return nil
             }
         }
         set {
             if isValidCellIndex(row: row, column: column) {
-                mainGrid[row][column] = newValue
+                mainGrid[matrixIndex(row, column)] = newValue
             }
         }
     }
@@ -62,7 +66,7 @@ class GameGrid
             let newRow = position.row
             let newColumn = position.column
             if isValidCellIndex(row: newRow, column: newColumn) {
-                return mainGrid[newRow][newColumn]
+                return mainGrid[matrixIndex(newRow, newColumn)]
             } else {
                 return nil
             }
@@ -71,7 +75,7 @@ class GameGrid
             let newRow = position.row
             let newColumn = position.column
             if isValidCellIndex(row: newRow, column: newColumn) {
-                mainGrid[newRow][newColumn] = newValue
+                mainGrid[matrixIndex(newRow, newColumn)] = newValue
             }
         }
     }
