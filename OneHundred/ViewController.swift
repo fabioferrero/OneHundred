@@ -8,34 +8,18 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    
+class ViewController: UIViewController
+{
+    // The cell grid composed by one hundred buttons
     @IBOutlet weak var cellsGrid: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Give at each cell/button an unique ID
-        
-        var buttonCounter = 0
-        
-        guard let stackViews = cellsGrid.arrangedSubviews as? [UIStackView] else {
-            print("stackViews extraction problem")
-            return
-        }
-        for stackView in stackViews {
-            guard let buttons = stackView.arrangedSubviews as? [UIButton] else {
-                print("buttons extraction problem")
-                return
-            }
-            for button in buttons {
-                button.accessibilityIdentifier = String(buttonCounter)
-                buttonCounter += 1
-            }
-        }
     }
     
-    @IBAction func tapCell(_ cell: UIButton) {
+    @IBAction func tapCell(_ cell: UIButton)
+    {
+        
     }
     
     

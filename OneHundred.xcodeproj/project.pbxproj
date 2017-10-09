@@ -12,7 +12,7 @@
 		E5C2D5F61F88FCC40069D77D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C2D5F41F88FCC40069D77D /* Main.storyboard */; };
 		E5C2D5F81F88FCC40069D77D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C2D5F71F88FCC40069D77D /* Assets.xcassets */; };
 		E5C2D5FB1F88FCC40069D77D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C2D5F91F88FCC40069D77D /* LaunchScreen.storyboard */; };
-		E5C2D6041F89187A0069D77D /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C2D6031F89187A0069D77D /* GridView.swift */; };
+		E5C2D60A1F8945550069D77D /* GameGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C2D6091F8945550069D77D /* GameGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +23,7 @@
 		E5C2D5F71F88FCC40069D77D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5C2D5FA1F88FCC40069D77D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E5C2D5FC1F88FCC40069D77D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E5C2D6031F89187A0069D77D /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		E5C2D6091F8945550069D77D /* GameGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +57,8 @@
 			isa = PBXGroup;
 			children = (
 				E5C2D5F21F88FCC40069D77D /* ViewController.swift */,
+				E5C2D6091F8945550069D77D /* GameGrid.swift */,
 				E5C2D5F41F88FCC40069D77D /* Main.storyboard */,
-				E5C2D6031F89187A0069D77D /* GridView.swift */,
 				E5C2D6021F88FCE40069D77D /* Supporting Files */,
 			);
 			path = OneHundred;
@@ -147,8 +147,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5C2D60A1F8945550069D77D /* GameGrid.swift in Sources */,
 				E5C2D5F31F88FCC40069D77D /* ViewController.swift in Sources */,
-				E5C2D6041F89187A0069D77D /* GridView.swift in Sources */,
 				E5C2D5F11F88FCC40069D77D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
