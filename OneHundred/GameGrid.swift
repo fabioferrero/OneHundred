@@ -44,6 +44,7 @@ class GameGrid
         return row * numberOfColumns + column
     }
     
+    // Subscript syntax for calls as grid[row, column]
     subscript(row: Int, column: Int) -> GridCell?
     {
         get {
@@ -60,6 +61,7 @@ class GameGrid
         }
     }
     
+    // Subscript syntax for calls as grid[position] with position as tuple (row, column)
     subscript(position: (row: Int, column: Int)) -> GridCell?
     {
         get {
@@ -76,6 +78,23 @@ class GameGrid
             let newColumn = position.column
             if isValidCellIndex(row: newRow, column: newColumn) {
                 mainGrid[matrixIndex(newRow, newColumn)] = newValue
+            }
+        }
+    }
+    
+    // Subscript syntax for calls as grid[sequentialIndex]
+    subscript(sequentialIndex: Int) -> GridCell?
+    {
+        get {
+            if sequentialIndex >= numberOfRows * numberOfColumns ||
+                sequentialIndex < 0 {
+                return nil
+            }
+            return mainGrid[sequentialIndex]
+        }
+        set {
+            if sequentialIndex >= 0 && sequentialIndex < numberOfRows * numberOfColumns {
+                mainGrid[sequentialIndex] = newValue
             }
         }
     }
