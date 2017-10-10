@@ -17,29 +17,42 @@ class GridCell
     var column: Int {
         return position.column
     }
+    var sequentialIndex: Int {
+        if let numberOfColumns = mainGrid?.numberOfColumns {
+            return position.row * numberOfColumns + position.row
+        } else {
+            return -1
+        }
+    }
     
-    var isUsed = false
-    var isActive = false
+    enum CellState {
+        case inactive
+        case active
+        case used
+        case possible
+    }
     
-    var isPossible = false
+    var state: CellState
     
     // A reference to the grid container
     private var mainGrid: GameGrid?
     
-    init?(atRow row: Int, andColumn column: Int, inGrid grid: GameGrid) {
+    init?(atRow row: Int, andColumn column: Int, inGrid grid: GameGrid, withState state: CellState = .possible) {
         self.mainGrid = grid
         if mainGrid?[row, column] == nil {
             self.position = (row, column)
+            self.state = state
         } else {
             // Cell already created at (row, column)
             return nil
         }
     }
     
-    init?(atPosition position: (row: Int, column: Int), inGrid grid: GameGrid) {
+    init?(atPosition position: (row: Int, column: Int), inGrid grid: GameGrid, withState state: CellState = .possible) {
         self.mainGrid = grid
         if mainGrid?[position] == nil {
             self.position = position
+            self.state = state
         } else {
             // Cell already created at (row, column)
             return nil
@@ -69,7 +82,7 @@ class GridCell
         let downCell = mainGrid?[position.row+1, position.column]
         return downCell
     }
-    func diagonal(direction: DiagonalDirection) -> GridCell? {
+    func diagonal(_ direction: DiagonalDirection) -> GridCell? {
         switch direction {
         case .upLeft:
             return self.up()?.left()
