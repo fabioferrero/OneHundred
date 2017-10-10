@@ -35,6 +35,44 @@ class GameGrid
         }
     }
     
+    func possibleCells(forCell cell: GridCell) -> [GridCell] // It supposes the cell being in the grid
+    {
+        var cellArray = [GridCell]()
+        if let possibleCell = cell.diagonal(.upLeft)?.diagonal(.upLeft) {
+            cellArray.append(possibleCell)  // top-left
+        }
+        if let possibleCell = cell.up()?.up()?.up() {
+            cellArray.append(possibleCell)  // up
+        }
+        if let possibleCell = cell.diagonal(.upRight)?.diagonal(.upRight) {
+            cellArray.append(possibleCell)  // top-right
+        }
+        if let possibleCell = cell.right()?.right()?.right() {
+            cellArray.append(possibleCell)  // right
+        }
+        if let possibleCell = cell.diagonal(.downRight)?.diagonal(.downRight) {
+            cellArray.append(possibleCell)  // down-right
+        }
+        if let possibleCell = cell.down()?.down()?.down() {
+            cellArray.append(possibleCell)  // down
+        }
+        if let possibleCell = cell.diagonal(.downLeft)?.diagonal(.downLeft) {
+            cellArray.append(possibleCell)  // down-left
+        }
+        if let possibleCell = cell.left()?.left()?.left() {
+            cellArray.append(possibleCell)  // left
+        }
+        return cellArray
+    }
+    
+    func forAllCellsPerform(_ action: (GridCell) -> ()) {
+        for element in mainGrid {
+            if let cell = element {
+                action(cell)
+            }
+        }
+    }
+    
     private func isValidCellIndex(row: Int, column: Int) -> Bool
     {
         return row >= 0 && row < numberOfRows && column >= 0 && column < numberOfColumns
@@ -82,21 +120,26 @@ class GameGrid
         }
     }
     
-    // Subscript syntax for calls as grid[sequentialIndex]
-    subscript(sequentialIndex: Int) -> GridCell?
+    func cellAt(sequentialIndex index: Int) -> GridCell?
     {
-        get {
-            if sequentialIndex >= numberOfRows * numberOfColumns ||
-                sequentialIndex < 0 {
-                return nil
-            }
-            return mainGrid[sequentialIndex]
+        if index >= numberOfRows * numberOfColumns ||
+            index < 0 {
+            return nil
         }
-        set {
-            if sequentialIndex >= 0 && sequentialIndex < numberOfRows * numberOfColumns {
-                mainGrid[sequentialIndex] = newValue
-            }
+        return mainGrid[index]
+    }
+    
+    func cellAt(sequentialIdentifier id: String) -> GridCell?
+    {
+        guard let index = Int(id) else {
+            print("Impossible to translate index from string")
+            return nil
         }
+        if index >= numberOfRows * numberOfColumns ||
+            index < 0 {
+            return nil
+        }
+        return mainGrid[index]
     }
     
 }
