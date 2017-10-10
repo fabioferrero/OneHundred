@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GridCell
+class GridCell
 {
     let position: (row: Int, column: Int)
     var row: Int {
