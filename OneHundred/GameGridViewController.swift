@@ -31,14 +31,14 @@ class GameGridViewController: UIViewController
         // Instanciate the model
         gameGrid = GameGrid(withRows: numberOfRows, andColumns: numberOfColumns)!
         
-        // instanciate the view
+        // Instanciate the view
         gridView = UIStackView()
         view.addSubview(gridView)
         
         resetButton = UIButton()
         view.addSubview(resetButton)
         
-        setupLayout()
+        setupLayoutAndConstraints()
     }
     
     private struct Colors {
@@ -56,7 +56,7 @@ class GameGridViewController: UIViewController
         gridView.heightAnchor.constraint(equalTo: gridView.widthAnchor).isActive = true
     }
     
-    private func setupResetButtonCostraint()
+    private func setupResetButtonCostraints()
     {
         resetButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         resetButton.centerYAnchor.constraint(equalTo: gridView.bottomAnchor, constant: 100).isActive = true
@@ -64,11 +64,10 @@ class GameGridViewController: UIViewController
         resetButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
-    private func setupLayout()
+    private func setupGridLayout()
     {
-        // Create the gridView
         var cellCount = 0
-    
+        
         for _ in 0..<numberOfRows {
             let stackView = UIStackView()
             for _ in 0..<numberOfColumns {
@@ -94,7 +93,10 @@ class GameGridViewController: UIViewController
         gridView.spacing = 5.0
         gridView.contentMode = .redraw
         gridView.translatesAutoresizingMaskIntoConstraints = false
-        
+    }
+    
+    private func setupResetButtonLayout()
+    {
         resetButton.translatesAutoresizingMaskIntoConstraints = false
         resetButton.setTitle("Reset", for: .normal)
         resetButton.setTitleColor(UIColor.red, for: .normal)
@@ -103,41 +105,61 @@ class GameGridViewController: UIViewController
         resetButton.layer.borderColor = UIColor.red.cgColor
         resetButton.layer.cornerRadius = 25
         resetButton.backgroundColor = UIColor.orange
-        resetButton.addTarget(self, action: #selector(clearAll), for: .touchUpInside)
-        
-        setupGridConstraints()
-        setupResetButtonCostraint()
+        resetButton.addTarget(self, action: #selector(resetTapped), for: .touchUpInside)
     }
     
+    private func setupLayoutAndConstraints()
+    {
+        // Setup Layouts
+        setupGridLayout()
+        setupResetButtonLayout()
+        
+        // Setup Contraints
+        setupGridConstraints()
+        setupResetButtonCostraints()
+    }
+    
+    /**
+     Returns the button in the view that is related to the given cell in the model.
+     */
     private func buttonForCell(_ cell: GridCell) -> UIButton {
         let stackView = gridView.arrangedSubviews[cell.row] as! UIStackView
         let cellButton = stackView.arrangedSubviews[cell.column] as! UIButton
         return cellButton
     }
     
+    /**
+     Update the view for all the possible cells with respect the given selected cell.
+     */
     private func setPossibleCells(for selectedCell: GridCell) {
         let possibleCells = gameGrid.possibleCells(forCell: selectedCell)
         for possibleCell in possibleCells {
             if possibleCell.state == .inactive {
                 let cellButton = buttonForCell(possibleCell)
-                possibleCell.state = .possible
                 cellButton.backgroundColor = Colors.possible
+                possibleCell.state = .possible
             }
         }
     }
 
+    /**
+     Restore the view for all the possible cells with respect the given selected cell.
+     */
     private func unsetPossibleCells(for selectedCell: GridCell) {
         let possibleCells = gameGrid.possibleCells(forCell: selectedCell)
         for possibleCell in possibleCells {
             if possibleCell.state == .possible {
                 let cellButton = buttonForCell(possibleCell)
-                possibleCell.state = .inactive
                 cellButton.backgroundColor = Colors.inactive
+                possibleCell.state = .inactive
             }
         }
     }
     
-    @objc func clearAll() {
+    /**
+     The method to execute when the reset button is tapped.
+     */
+    @objc func resetTapped() {
         gameGrid.forAllCellsPerform{ $0.state = .inactive }
         isGameStarted = false
         for row in 0..<numberOfRows {
@@ -149,45 +171,46 @@ class GameGridViewController: UIViewController
         }
     }
     
+    /**
+     Activate the given cell by changing its state and the button color.
+     
+     - Note: it also update the grid view in order to show all possible cells.
+     */
+    private func activateCell(_ selectedCell: GridCell, forButton button: UIButton) {
+        button.pulse()
+        selectedCell.state = .active
+        button.backgroundColor = Colors.active
+        setPossibleCells(for: selectedCell)
+        lastSelectedCell = selectedCell
+    }
+    
+    /**
+     The method to execute when a cell in the grid is tapped.
+     */
     @objc func tapCell(_ button: UIButton)
     {
-        guard let buttonID = button.accessibilityIdentifier else {
-            print("Button without identifier")
-            return
-        }
-            
-        guard let selectedCell = gameGrid.cellAt(sequentialIdentifier: buttonID) else {
-            print("Cell not found in grid")
-            return
-        }
+        guard let buttonID = button.accessibilityIdentifier else { return }
+        guard let selectedCell = gameGrid.cellAt(sequentialIdentifier: buttonID) else { return }
         
         if isGameStarted {
             switch selectedCell.state {
-            case .inactive:
-                break   // Do nothing
+            case .possible:
+                lastSelectedCell?.state = .used
+                buttonForCell(lastSelectedCell!).backgroundColor = Colors.used
+                unsetPossibleCells(for: lastSelectedCell!)
+                activateCell(selectedCell, forButton: button)
             case .active:
                 selectedCell.state = .possible
                 button.backgroundColor = Colors.possible
                 unsetPossibleCells(for: selectedCell)
-            case .possible:
-                button.pulse()
-                lastSelectedCell?.state = .used
-                buttonForCell(lastSelectedCell!).backgroundColor = Colors.used
-                unsetPossibleCells(for: lastSelectedCell!)
-                lastSelectedCell = selectedCell
-                selectedCell.state = .active
-                button.backgroundColor = Colors.active
-                setPossibleCells(for: selectedCell)
+            case .inactive:
+                break   // Do nothing
             case .used:
                 break   // Do nothing
             }
         } else {
-            button.pulse()
             gameGrid.forAllCellsPerform{ $0.state = .inactive }
-            selectedCell.state = .active
-            button.backgroundColor = Colors.active
-            setPossibleCells(for: selectedCell)
-            lastSelectedCell = selectedCell
+            activateCell(selectedCell, forButton: button)
             isGameStarted = true
         }
     }
