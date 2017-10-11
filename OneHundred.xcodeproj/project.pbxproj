@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E524DF6D1F8BAC6B0072E3CC /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E524DF6C1F8BAC6B0072E3CC /* GridCell.swift */; };
+		E554A9721F8EA531005CF827 /* UIButtonExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554A9711F8EA531005CF827 /* UIButtonExtention.swift */; };
 		E5C2D5F11F88FCC40069D77D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C2D5F01F88FCC40069D77D /* AppDelegate.swift */; };
 		E5C2D5F31F88FCC40069D77D /* GameGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C2D5F21F88FCC40069D77D /* GameGridViewController.swift */; };
 		E5C2D5F61F88FCC40069D77D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C2D5F41F88FCC40069D77D /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		E524DF6C1F8BAC6B0072E3CC /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
+		E554A9711F8EA531005CF827 /* UIButtonExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtention.swift; sourceTree = "<group>"; };
 		E5C2D5ED1F88FCC40069D77D /* OneHundred.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneHundred.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5C2D5F01F88FCC40069D77D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5C2D5F21F88FCC40069D77D /* GameGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGridViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				E5C2D6091F8945550069D77D /* GameGrid.swift */,
 				E524DF6C1F8BAC6B0072E3CC /* GridCell.swift */,
 				E5C2D5F41F88FCC40069D77D /* Main.storyboard */,
+				E554A9711F8EA531005CF827 /* UIButtonExtention.swift */,
 				E5C2D6021F88FCE40069D77D /* Supporting Files */,
 			);
 			path = OneHundred;
@@ -154,6 +157,7 @@
 				E5C2D5F31F88FCC40069D77D /* GameGridViewController.swift in Sources */,
 				E5C2D5F11F88FCC40069D77D /* AppDelegate.swift in Sources */,
 				E524DF6D1F8BAC6B0072E3CC /* GridCell.swift in Sources */,
+				E554A9721F8EA531005CF827 /* UIButtonExtention.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
