@@ -8,14 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController
+class GameGridViewController: UIViewController
 {
     // The cell grid composed by one hundred buttons
     var gridView: UIStackView!
     // The reset button
     var resetButton: UIButton!
     
-    // The model for the gameGrid
+    // The model for the grid
     var gameGrid: GameGrid!
     
     var numberOfRows = 10
@@ -170,6 +170,7 @@ class ViewController: UIViewController
                 button.backgroundColor = Colors.possible
                 unsetPossibleCells(for: selectedCell)
             case .possible:
+                button.pulse()
                 lastSelectedCell?.state = .used
                 buttonForCell(lastSelectedCell!).backgroundColor = Colors.used
                 unsetPossibleCells(for: lastSelectedCell!)
@@ -181,6 +182,7 @@ class ViewController: UIViewController
                 break   // Do nothing
             }
         } else {
+            button.pulse()
             gameGrid.forAllCellsPerform{ $0.state = .inactive }
             selectedCell.state = .active
             button.backgroundColor = Colors.active
