@@ -8,14 +8,29 @@
 
 import Foundation
 
+/**
+ A grid model that contains instances of GridCells class.
+ */
 class GameGrid
 {
+    /**
+     The number of rows in the grid.
+     */
     let numberOfRows: Int
+    
+    /**
+     The number of columns in the grid.
+     */
     let numberOfColumns: Int
     
-    // Arrays of arrays for implementing the matrix
+    /**
+     The internal array that implements the matrix layout.
+     */
     private var mainGrid: [GridCell?]
     
+    /**
+     Create a new GameGrid with specified numberOfRows and numberOfColumns.
+     */
     init?(withRows numberOfRows: Int, andColumns numberOfColumns: Int)
     {
         guard numberOfRows > 0 && numberOfColumns > 0 else {
@@ -29,12 +44,14 @@ class GameGrid
         mainGrid = Array<GridCell?>(repeating: nil, count: numberOfRows * numberOfColumns)
         for rowIndex in 0..<numberOfRows {
             for columnIndex in 0..<numberOfColumns {
-                // In this case bounds are not checked
                 mainGrid[matrixIndex(rowIndex, columnIndex)] = GridCell(atRow: rowIndex, andColumn: columnIndex, inGrid: self)
             }
         }
     }
     
+    /**
+     Returns a collection of cells that are reacheables from the cell parameter.
+     */
     func possibleCells(forCell cell: GridCell) -> [GridCell] // It supposes the cell being in the grid
     {
         var cellArray = [GridCell]()
@@ -65,6 +82,9 @@ class GameGrid
         return cellArray
     }
     
+    /**
+     Perform the same action on all cell inside the grid.
+     */
     func forAllCellsPerform(_ action: (GridCell) -> ()) {
         for element in mainGrid {
             if let cell = element {
@@ -73,11 +93,43 @@ class GameGrid
         }
     }
     
+    /**
+     Returns the cell at the specified sequentialIndex inside the grid.
+     */
+    func cellAt(sequentialIndex index: Int) -> GridCell?
+    {
+        if index >= numberOfRows * numberOfColumns || index < 0 {
+            return nil
+        }
+        return mainGrid[index]
+    }
+    
+    /**
+     Returns the cell that corresponds to the sequentialIdentifier inside th grid.
+     */
+    func cellAt(sequentialIdentifier id: String) -> GridCell?
+    {
+        guard let index = Int(id) else {
+            print("Impossible to translate index from string")
+            return nil
+        }
+        if index >= numberOfRows * numberOfColumns || index < 0 {
+            return nil
+        }
+        return mainGrid[index]
+    }
+    
+    /**
+     Check the validity of the given coordinates for a cell inside the grid.
+     */
     private func isValidCellIndex(row: Int, column: Int) -> Bool
     {
         return row >= 0 && row < numberOfRows && column >= 0 && column < numberOfColumns
     }
     
+    /**
+     Translate 2D coordinate (row, column) into the sequential index for accessing the internal array.
+     */
     private func matrixIndex(_ row: Int, _ column: Int) -> Int {
         return row * numberOfColumns + column
     }
@@ -119,27 +171,5 @@ class GameGrid
             }
         }
     }
-    
-    func cellAt(sequentialIndex index: Int) -> GridCell?
-    {
-        if index >= numberOfRows * numberOfColumns ||
-            index < 0 {
-            return nil
-        }
-        return mainGrid[index]
-    }
-    
-    func cellAt(sequentialIdentifier id: String) -> GridCell?
-    {
-        guard let index = Int(id) else {
-            print("Impossible to translate index from string")
-            return nil
-        }
-        if index >= numberOfRows * numberOfColumns ||
-            index < 0 {
-            return nil
-        }
-        return mainGrid[index]
-    }
-    
 }
+
