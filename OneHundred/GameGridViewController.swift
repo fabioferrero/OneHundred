@@ -32,6 +32,12 @@ class GameGridViewController: UIViewController
     var isGameStarted = false
     var lastSelectedCell: GridCell?
     
+    private var scoreCounter: Int = 0 {
+        didSet {
+            scoreLabel.text = String(scoreCounter)
+        }
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -49,6 +55,8 @@ class GameGridViewController: UIViewController
         static let possible: UIColor = .orange
         static let used: UIColor = .gray
     }
+    
+    // MARK: - View's Constraints
     
     private func setupGridConstraints()
     {
@@ -71,6 +79,8 @@ class GameGridViewController: UIViewController
         scoreLabel.leadingAnchor.constraint(equalTo: gridView.leadingAnchor).isActive = true
         scoreLabel.centerYAnchor.constraint(equalTo: gridView.topAnchor, constant: -80).isActive = true
     }
+    
+    // MARK: - View's Layout
     
     private func setupGridLayout()
     {
@@ -128,7 +138,7 @@ class GameGridViewController: UIViewController
         view.addSubview(scoreLabel)
         
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
-        scoreLabel.text = "scoreLabel"
+        scoreLabel.text = "0"
         scoreLabel.font = UIFont.boldSystemFont(ofSize: 30)
     }
     
@@ -144,6 +154,8 @@ class GameGridViewController: UIViewController
         setupResetButtonCostraints()
         setupScoreLabelConstraints()
     }
+    
+    // MARK: -
     
     /**
      Returns the button in the view that is related to the given cell in the model.
@@ -183,21 +195,6 @@ class GameGridViewController: UIViewController
     }
     
     /**
-     The method to execute when the reset button is tapped.
-     */
-    @objc func resetTapped() {
-        gameGrid.forAllCellsPerform{ $0.state = .inactive }
-        isGameStarted = false
-        for row in 0..<numberOfRows {
-            for column in 0..<numberOfColumns {
-                let stackView = gridView.arrangedSubviews[row] as! UIStackView
-                let button = stackView.arrangedSubviews[column] as! UIButton
-                button.backgroundColor = Colors.inactive
-            }
-        }
-    }
-    
-    /**
      Activate the given cell by changing its state and the button color.
      
      - Note: it also update the grid view in order to show all possible cells.
@@ -208,6 +205,25 @@ class GameGridViewController: UIViewController
         button.backgroundColor = Colors.active
         setPossibleCells(for: selectedCell)
         lastSelectedCell = selectedCell
+        scoreCounter += 1
+    }
+    
+    // MARK: - Button's actions
+    
+    /**
+     The method to execute when the reset button is tapped.
+     */
+    @objc func resetTapped() {
+        gameGrid.forAllCellsPerform{ $0.state = .inactive }
+        isGameStarted = false
+        scoreCounter = 0
+        for row in 0..<numberOfRows {
+            for column in 0..<numberOfColumns {
+                let stackView = gridView.arrangedSubviews[row] as! UIStackView
+                let button = stackView.arrangedSubviews[column] as! UIButton
+                button.backgroundColor = Colors.inactive
+            }
+        }
     }
     
     /**
@@ -229,6 +245,7 @@ class GameGridViewController: UIViewController
                 selectedCell.state = .possible
                 button.backgroundColor = Colors.possible
                 unsetPossibleCells(for: selectedCell)
+                scoreCounter -= 1
             case .inactive:
                 break   // Do nothing
             case .used:
