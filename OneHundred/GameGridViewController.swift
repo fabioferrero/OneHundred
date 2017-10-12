@@ -10,13 +10,21 @@ import UIKit
 
 class GameGridViewController: UIViewController
 {
+    // MARK: - View
+    
     // The cell grid composed by one hundred buttons
     var gridView: UIStackView!
     // The reset button
     var resetButton: UIButton!
+    // The score label
+    var scoreLabel: UILabel!
+    
+    // MARK: - Model
     
     // The model for the grid
     var gameGrid: GameGrid!
+    
+    // MARK: - Controller
     
     var numberOfRows = 10
     var numberOfColumns = 10
@@ -32,12 +40,6 @@ class GameGridViewController: UIViewController
         gameGrid = GameGrid(withRows: numberOfRows, andColumns: numberOfColumns)!
         
         // Instanciate the view
-        gridView = UIStackView()
-        view.addSubview(gridView)
-        
-        resetButton = UIButton()
-        view.addSubview(resetButton)
-        
         setupLayoutAndConstraints()
     }
     
@@ -64,8 +66,17 @@ class GameGridViewController: UIViewController
         resetButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
+    private func setupScoreLabelConstraints()
+    {
+        scoreLabel.leadingAnchor.constraint(equalTo: gridView.leadingAnchor).isActive = true
+        scoreLabel.centerYAnchor.constraint(equalTo: gridView.topAnchor, constant: -80).isActive = true
+    }
+    
     private func setupGridLayout()
     {
+        gridView = UIStackView()
+        view.addSubview(gridView)
+        
         var cellCount = 0
         
         for _ in 0..<numberOfRows {
@@ -97,6 +108,9 @@ class GameGridViewController: UIViewController
     
     private func setupResetButtonLayout()
     {
+        resetButton = UIButton()
+        view.addSubview(resetButton)
+        
         resetButton.translatesAutoresizingMaskIntoConstraints = false
         resetButton.setTitle("Reset", for: .normal)
         resetButton.setTitleColor(UIColor.red, for: .normal)
@@ -108,15 +122,27 @@ class GameGridViewController: UIViewController
         resetButton.addTarget(self, action: #selector(resetTapped), for: .touchUpInside)
     }
     
+    private func setupScoreLabelLayout()
+    {
+        scoreLabel = UILabel()
+        view.addSubview(scoreLabel)
+        
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        scoreLabel.text = "scoreLabel"
+        scoreLabel.font = UIFont.boldSystemFont(ofSize: 30)
+    }
+    
     private func setupLayoutAndConstraints()
     {
         // Setup Layouts
         setupGridLayout()
         setupResetButtonLayout()
+        setupScoreLabelLayout()
         
         // Setup Contraints
         setupGridConstraints()
         setupResetButtonCostraints()
+        setupScoreLabelConstraints()
     }
     
     /**
