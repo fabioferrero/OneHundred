@@ -30,7 +30,11 @@ class GameGridViewController: UIViewController
     var numberOfColumns = 10
     
     var isGameStarted = false
-    var lastSelectedCell: GridCell?
+    var lastSelectedCell: GridCell? {
+        return selectionHistory.last
+    }
+    
+    var selectionHistory = [GridCell]()
     
     private var scoreCounter: Int = 0 {
         didSet {
@@ -129,7 +133,7 @@ class GameGridViewController: UIViewController
         resetButton.layer.borderColor = UIColor.red.cgColor
         resetButton.layer.cornerRadius = 25
         resetButton.backgroundColor = UIColor.orange
-        resetButton.addTarget(self, action: #selector(resetTapped), for: .touchUpInside)
+        resetButton.addTarget(self, action: #selector(resetTapped(_:)), for: .touchUpInside)
     }
     
     private func setupScoreLabelLayout()
@@ -204,8 +208,22 @@ class GameGridViewController: UIViewController
         selectedCell.state = .active
         button.backgroundColor = Colors.active
         setPossibleCells(for: selectedCell)
-        lastSelectedCell = selectedCell
+        selectionHistory.append(selectedCell)
         scoreCounter += 1
+    }
+    
+    /**
+     Deactivate the given cell by changing its state and button color.
+     
+     - Note: is also update the grid view in order to hide all possible cells.
+     */
+    private func deactivateCell(_ selectedCell: GridCell, forButton button: UIButton) {
+        button.pulse()
+        selectedCell.state = .possible
+        button.backgroundColor = Colors.possible
+        unsetPossibleCells(for: selectedCell)
+        selectionHistory.removeLast()
+        scoreCounter -= 1
     }
     
     // MARK: - Button's actions
@@ -213,10 +231,12 @@ class GameGridViewController: UIViewController
     /**
      The method to execute when the reset button is tapped.
      */
-    @objc func resetTapped() {
+    @objc func resetTapped(_ button: UIButton) {
+        button.pulse()
         gameGrid.forAllCellsPerform{ $0.state = .inactive }
         isGameStarted = false
         scoreCounter = 0
+        selectionHistory.removeAll()
         for row in 0..<numberOfRows {
             for column in 0..<numberOfColumns {
                 let stackView = gridView.arrangedSubviews[row] as! UIStackView
@@ -237,15 +257,23 @@ class GameGridViewController: UIViewController
         if isGameStarted {
             switch selectedCell.state {
             case .possible:
-                lastSelectedCell?.state = .used
-                buttonForCell(lastSelectedCell!).backgroundColor = Colors.used
-                unsetPossibleCells(for: lastSelectedCell!)
+                if let lastCell = lastSelectedCell {
+                    lastCell.state = .used
+                    buttonForCell(lastCell).backgroundColor = Colors.used
+                    unsetPossibleCells(for: lastCell)
+                }
                 activateCell(selectedCell, forButton: button)
             case .active:
-                selectedCell.state = .possible
-                button.backgroundColor = Colors.possible
-                unsetPossibleCells(for: selectedCell)
-                scoreCounter -= 1
+                deactivateCell(selectedCell, forButton: button)
+                if let lastCell = lastSelectedCell {
+                    lastCell.state = .active
+                    buttonForCell(lastCell).backgroundColor = Colors.active
+                    setPossibleCells(for: lastCell)
+                } else {
+                    selectedCell.state = .inactive
+                    button.backgroundColor = Colors.inactive
+                    isGameStarted = false
+                }
             case .inactive:
                 break   // Do nothing
             case .used:
