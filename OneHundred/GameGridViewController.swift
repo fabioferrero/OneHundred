@@ -135,12 +135,12 @@ class GameGridViewController: UIViewController
         
         resetButton.translatesAutoresizingMaskIntoConstraints = false
         resetButton.setTitle("Reset", for: .normal)
-        resetButton.setTitleColor(UIColor.red, for: .normal)
+        resetButton.setTitleColor(UIColor.orange, for: .normal)
         resetButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         resetButton.layer.borderWidth = 2
-        resetButton.layer.borderColor = UIColor.red.cgColor
+        resetButton.layer.borderColor = UIColor.orange.cgColor
         resetButton.layer.cornerRadius = 25
-        resetButton.backgroundColor = UIColor.orange
+        //resetButton.backgroundColor = UIColor.orange
         resetButton.addTarget(self, action: #selector(tapReset(_:)), for: .touchUpInside)
     }
     
