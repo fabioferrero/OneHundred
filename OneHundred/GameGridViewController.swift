@@ -16,6 +16,8 @@ class GameGridViewController: UIViewController
     var gridView: UIStackView!
     // The reset button
     var resetButton: UIButton!
+    // The solve button
+    var solveButton: UIButton!
     // The score label
     var scoreLabel: UILabel!
     // The back button
@@ -52,7 +54,15 @@ class GameGridViewController: UIViewController
         gameGrid = GameGrid(withRows: numberOfRows, andColumns: numberOfColumns)!
         
         // Instanciate the view
-        setupLayoutAndConstraints()
+        setupLayout()
+    }
+    
+    
+    override func viewWillLayoutSubviews()
+    {
+        super.viewWillLayoutSubviews()
+
+        setupConstraintsForPortrait(true)
     }
     
     private struct Colors {
@@ -64,32 +74,85 @@ class GameGridViewController: UIViewController
     
     // MARK: - View's Constraints
     
-    private func setupGridConstraints()
+    private func setupGridConstraintsForPortrait(_ active: Bool)
     {
-        gridView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        gridView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        gridView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9).isActive = true
-        gridView.heightAnchor.constraint(equalTo: gridView.widthAnchor).isActive = true
+        gridView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = active
+        gridView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = active
+        gridView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9).isActive = active
+        gridView.heightAnchor.constraint(equalTo: gridView.widthAnchor).isActive = active
     }
     
-    private func setupResetButtonConstraints()
+    private func setupResetButtonConstraintsForPortrait(_ active: Bool)
     {
-        resetButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        resetButton.centerYAnchor.constraint(equalTo: gridView.bottomAnchor, constant: 100).isActive = true
-        resetButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
-        resetButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        resetButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = active
+        resetButton.centerYAnchor.constraint(equalTo: gridView.bottomAnchor, constant: 80).isActive = active
+        resetButton.widthAnchor.constraint(equalToConstant: 160).isActive = active
+        resetButton.heightAnchor.constraint(equalToConstant: 50).isActive = active
     }
     
-    private func setupScoreLabelConstraints()
+    private func setupSolveButtonConstraintsForPortrait(_ active: Bool)
     {
-        scoreLabel.leadingAnchor.constraint(equalTo: gridView.leadingAnchor).isActive = true
-        scoreLabel.centerYAnchor.constraint(equalTo: gridView.topAnchor, constant: -80).isActive = true
+        solveButton.centerXAnchor.constraint(equalTo: resetButton.centerXAnchor).isActive = active
+        solveButton.centerYAnchor.constraint(equalTo: resetButton.bottomAnchor, constant: 40).isActive = active
+        solveButton.widthAnchor.constraint(equalToConstant: 160).isActive = active
+        solveButton.heightAnchor.constraint(equalToConstant: 50).isActive = active
     }
     
-    private func setupBackButtonConstraints()
+    private func setupScoreLabelConstraintsForPortrait(_ active: Bool)
     {
-        backButton.trailingAnchor.constraint(equalTo: gridView.trailingAnchor).isActive = true
-        backButton.centerYAnchor.constraint(equalTo: scoreLabel.centerYAnchor).isActive = true
+        scoreLabel.leadingAnchor.constraint(equalTo: gridView.leadingAnchor).isActive = active
+        scoreLabel.centerYAnchor.constraint(equalTo: gridView.topAnchor, constant: -80).isActive = active
+    }
+    
+    private func setupBackButtonConstraintsForPortrait(_ active: Bool)
+    {
+        backButton.trailingAnchor.constraint(equalTo: gridView.trailingAnchor).isActive = active
+        backButton.centerYAnchor.constraint(equalTo: scoreLabel.centerYAnchor).isActive = active
+    }
+    
+    private func setupConstraintsForPortrait(_ active: Bool)
+    {
+        setupGridConstraintsForPortrait(active)
+        setupResetButtonConstraintsForPortrait(active)
+        setupSolveButtonConstraintsForPortrait(active)
+        setupScoreLabelConstraintsForPortrait(active)
+        setupBackButtonConstraintsForPortrait(active)
+    }
+    
+    private func setupGridConstraintsForLandscape(_ active: Bool)
+    {
+        gridView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = active
+        gridView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = active
+        gridView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.9).isActive = active
+        gridView.widthAnchor.constraint(equalTo: gridView.heightAnchor).isActive = active
+    }
+    
+    private func setupResetButtonConstraintsForLandscape(_ active: Bool)
+    {
+        resetButton.centerXAnchor.constraint(equalTo: gridView.trailingAnchor, constant: 100).isActive = active
+        resetButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = active
+        resetButton.widthAnchor.constraint(equalToConstant: 140).isActive = active
+        resetButton.heightAnchor.constraint(equalToConstant: 50).isActive = active
+    }
+    
+    private func setupScoreLabelConstraintsForLandscape(_ active: Bool)
+    {
+        scoreLabel.trailingAnchor.constraint(equalTo: gridView.leadingAnchor, constant: -80).isActive = active
+        scoreLabel.topAnchor.constraint(equalTo: gridView.topAnchor, constant: 80).isActive = active
+    }
+    
+    private func setupBackButtonConstraintsForLandscape(_ active: Bool)
+    {
+        backButton.trailingAnchor.constraint(equalTo: scoreLabel.trailingAnchor).isActive = active
+        backButton.bottomAnchor.constraint(equalTo: gridView.bottomAnchor, constant: -80).isActive = active
+    }
+    
+    private func setupConstraintsForLandscape(_ active: Bool)
+    {
+        setupGridConstraintsForLandscape(active)
+        setupResetButtonConstraintsForLandscape(active)
+        setupScoreLabelConstraintsForLandscape(active)
+        setupBackButtonConstraintsForLandscape(active)
     }
     
     // MARK: - View's Layout
@@ -115,7 +178,6 @@ class GameGridViewController: UIViewController
             stackView.alignment = .fill
             stackView.distribution = .fillEqually
             stackView.spacing = 5.0
-            stackView.contentMode = .redraw
             stackView.translatesAutoresizingMaskIntoConstraints = false
             gridView.addArrangedSubview(stackView)
         }
@@ -124,7 +186,6 @@ class GameGridViewController: UIViewController
         gridView.alignment = .fill
         gridView.distribution = .fillEqually
         gridView.spacing = 5.0
-        gridView.contentMode = .redraw
         gridView.translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -142,6 +203,21 @@ class GameGridViewController: UIViewController
         resetButton.layer.cornerRadius = 25
         //resetButton.backgroundColor = UIColor.orange
         resetButton.addTarget(self, action: #selector(tapReset(_:)), for: .touchUpInside)
+    }
+    
+    private func setupSolveButtonLayout()
+    {
+        solveButton = UIButton()
+        view.addSubview(solveButton)
+        
+        solveButton.translatesAutoresizingMaskIntoConstraints = false
+        solveButton.setTitle("Solve", for: .normal)
+        solveButton.setTitleColor(UIColor.green, for: .normal)
+        solveButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        solveButton.layer.borderWidth = 2
+        solveButton.layer.borderColor = UIColor.green.cgColor
+        solveButton.layer.cornerRadius = 25
+        solveButton.addTarget(self, action: #selector(tapSolve(_:)), for: .touchUpInside)
     }
     
     private func setupScoreLabelLayout()
@@ -166,19 +242,13 @@ class GameGridViewController: UIViewController
         backButton.addTarget(self, action: #selector(tapBack(_:)), for: .touchUpInside)
     }
     
-    private func setupLayoutAndConstraints()
+    private func setupLayout()
     {
-        // Setup Layouts
         setupGridLayout()
         setupResetButtonLayout()
+        setupSolveButtonLayout()
         setupScoreLabelLayout()
         setupBackButtonLayout()
-        
-        // Setup Contraints
-        setupGridConstraints()
-        setupResetButtonConstraints()
-        setupScoreLabelConstraints()
-        setupBackButtonConstraints()
     }
     
     // MARK: -
@@ -332,6 +402,14 @@ class GameGridViewController: UIViewController
             activateCell(selectedCell, forButton: button)
             isGameStarted = true
         }
+    }
+    
+    /**
+     The method to exeute when the "solve" button is tapped
+     */
+    @objc func tapSolve(_ button: UIButton)
+    {
+        //solveGame()
     }
 }
 
