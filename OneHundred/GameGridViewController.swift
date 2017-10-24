@@ -368,6 +368,7 @@ class GameGridViewController: UIViewController
             } else {
                 // Choose one possible cell and RECURSION
                 for cell in possibleCells {
+                    if stopSolving { return }
                     mainQueue.sync {
                         let cellButton = self.buttonForCell(cell)
                         self.tapCell(cellButton)
@@ -375,6 +376,7 @@ class GameGridViewController: UIViewController
                     usleep(200000) // sleep for 0.2 second
                     solveGame()
                 }
+                if stopSolving { return }
                 // If all possible cells are already tried, backtrack
                 usleep(200000) // sleep for 0.2 second
                 mainQueue.sync {
