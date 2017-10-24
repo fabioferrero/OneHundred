@@ -20,6 +20,9 @@ class GameGridViewController: UIViewController
     var solveButton: UIButton!
     // The score label
     var scoreLabel: UILabel!
+    // The solving loading label and activity indicator
+    var solutionLoadingLabel: UILabel!
+    var spinIndicator: UIActivityIndicatorView!
     // The back button
     var backButton: UIButton!
     
@@ -116,6 +119,14 @@ class GameGridViewController: UIViewController
         backButton.centerYAnchor.constraint(equalTo: scoreLabel.centerYAnchor).isActive = active
     }
     
+    private func setupSolutionLoadingConstraintForPortrait(_ active: Bool)
+    {
+        spinIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 160).isActive = active
+        spinIndicator.centerYAnchor.constraint(equalTo: scoreLabel.centerYAnchor).isActive = active
+        solutionLoadingLabel.leadingAnchor.constraint(equalTo: spinIndicator.trailingAnchor, constant: 10).isActive = active
+        solutionLoadingLabel.centerYAnchor.constraint(equalTo: spinIndicator.centerYAnchor).isActive = active
+    }
+    
     private func setupConstraintsForPortrait(_ active: Bool)
     {
         setupGridConstraintsForPortrait(active)
@@ -123,42 +134,7 @@ class GameGridViewController: UIViewController
         setupSolveButtonConstraintsForPortrait(active)
         setupScoreLabelConstraintsForPortrait(active)
         setupBackButtonConstraintsForPortrait(active)
-    }
-    
-    private func setupGridConstraintsForLandscape(_ active: Bool)
-    {
-        gridView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = active
-        gridView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = active
-        gridView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.9).isActive = active
-        gridView.widthAnchor.constraint(equalTo: gridView.heightAnchor).isActive = active
-    }
-    
-    private func setupResetButtonConstraintsForLandscape(_ active: Bool)
-    {
-        resetButton.centerXAnchor.constraint(equalTo: gridView.trailingAnchor, constant: 100).isActive = active
-        resetButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = active
-        resetButton.widthAnchor.constraint(equalToConstant: 140).isActive = active
-        resetButton.heightAnchor.constraint(equalToConstant: 50).isActive = active
-    }
-    
-    private func setupScoreLabelConstraintsForLandscape(_ active: Bool)
-    {
-        scoreLabel.trailingAnchor.constraint(equalTo: gridView.leadingAnchor, constant: -80).isActive = active
-        scoreLabel.topAnchor.constraint(equalTo: gridView.topAnchor, constant: 80).isActive = active
-    }
-    
-    private func setupBackButtonConstraintsForLandscape(_ active: Bool)
-    {
-        backButton.trailingAnchor.constraint(equalTo: scoreLabel.trailingAnchor).isActive = active
-        backButton.bottomAnchor.constraint(equalTo: gridView.bottomAnchor, constant: -80).isActive = active
-    }
-    
-    private func setupConstraintsForLandscape(_ active: Bool)
-    {
-        setupGridConstraintsForLandscape(active)
-        setupResetButtonConstraintsForLandscape(active)
-        setupScoreLabelConstraintsForLandscape(active)
-        setupBackButtonConstraintsForLandscape(active)
+        setupSolutionLoadingConstraintForPortrait(active)
     }
     
     // MARK: - View's Layout
@@ -207,7 +183,6 @@ class GameGridViewController: UIViewController
         resetButton.layer.borderWidth = 2
         resetButton.layer.borderColor = UIColor.orange.cgColor
         resetButton.layer.cornerRadius = 25
-        //resetButton.backgroundColor = UIColor.orange
         resetButton.addTarget(self, action: #selector(tapReset(_:)), for: .touchUpInside)
     }
     
@@ -248,6 +223,21 @@ class GameGridViewController: UIViewController
         backButton.addTarget(self, action: #selector(tapBack(_:)), for: .touchUpInside)
     }
     
+    private func setupSolutionLoadingLayout()
+    {
+        solutionLoadingLabel = UILabel()
+        view.addSubview(solutionLoadingLabel)
+        spinIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        view.addSubview(spinIndicator)
+        
+        solutionLoadingLabel.translatesAutoresizingMaskIntoConstraints = false
+        solutionLoadingLabel.text = "Finding a solution..."
+        solutionLoadingLabel.font = UIFont.systemFont(ofSize: 24)
+        solutionLoadingLabel.isHidden = true
+        
+        spinIndicator.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
     private func setupLayout()
     {
         setupGridLayout()
@@ -255,6 +245,7 @@ class GameGridViewController: UIViewController
         setupSolveButtonLayout()
         setupScoreLabelLayout()
         setupBackButtonLayout()
+        setupSolutionLoadingLayout()
     }
     
     // MARK: -
@@ -487,6 +478,8 @@ class GameGridViewController: UIViewController
             solveButton.setTitle("Solve", for: .normal)
             solveButton.setTitleColor(UIColor.green, for: .normal)
             solveButton.layer.borderColor = UIColor.green.cgColor
+            spinIndicator.stopAnimating()
+            solutionLoadingLabel.isHidden = true
         } else {            // the game is not solving (is stopped)
             backgroudQueue.async {
                 self.solveGame()
@@ -495,6 +488,8 @@ class GameGridViewController: UIViewController
             solveButton.setTitle("Stop", for: .normal)
             solveButton.setTitleColor(UIColor.red, for: .normal)
             solveButton.layer.borderColor = UIColor.red.cgColor
+            spinIndicator.startAnimating()
+            solutionLoadingLabel.isHidden = false
         }
     }
 }
