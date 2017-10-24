@@ -34,6 +34,12 @@ class GameGridViewController: UIViewController
     var numberOfColumns = 10
     
     var isGameStarted = false
+    var stopSolving = true
+    
+    var isGameSolved: Bool {
+        return scoreCounter == 100 ? true : false
+    }
+    
     var lastSelectedCell: GridCell? {
         return selectionHistory.last
     }
@@ -323,6 +329,71 @@ class GameGridViewController: UIViewController
         scoreCounter -= 1
     }
     
+    /**
+     Returns a random integer that is in between the specified lower and upper bounds.
+     */
+    private func randomInt(from lowerBound: Int, to upperBound: Int) -> Int?
+    {
+        guard lowerBound < upperBound else { return nil }
+        let difference = Double(upperBound - lowerBound)
+        return Int(Double(arc4random()) / Double(UInt32.max) * difference) + lowerBound
+    }
+    
+    private let mainQueue = DispatchQueue.main
+    private let backgroudQueue = DispatchQueue.global(qos: .userInitiated)
+    
+    // MARK: - Solving Engine
+    
+    /**
+     Find a solution of the game using a recursive greedy approach with backtrack.
+     
+     TODO: move to graphic solution finder to only computation finder, while shows graphically
+     only the founded solution.
+     */
+    private func solveGame() {
+        if stopSolving { return }
+        if let lastCell = lastSelectedCell {
+            let possibleCells = gameGrid.possibleCells(forCell: lastCell).filter { $0.state == .possible }
+            if possibleCells.isEmpty {
+                if !isGameSolved {
+                    // Backtrack
+                    usleep(200000) // sleep for 0.2 second
+                    mainQueue.sync {
+                        let cellButton = buttonForCell(lastCell)
+                        self.tapCell(cellButton)
+                    }
+                } else {
+                    // Solved
+                }
+            } else {
+                // Choose one possible cell and RECURSION
+                for cell in possibleCells {
+                    mainQueue.sync {
+                        let cellButton = self.buttonForCell(cell)
+                        self.tapCell(cellButton)
+                    }
+                    usleep(200000) // sleep for 0.2 second
+                    solveGame()
+                }
+                // If all possible cells are already tried, backtrack
+                usleep(200000) // sleep for 0.2 second
+                mainQueue.sync {
+                    let cellButton = buttonForCell(lastCell)
+                    self.tapCell(cellButton)
+                }
+            }
+        } else {
+            mainQueue.sync {
+                let randomFrom0To99 = self.randomInt(from: 0, to: 99)!
+                let randomCell = self.gameGrid.cellAt(sequentialIndex: randomFrom0To99)!
+                let randomButton = self.buttonForCell(randomCell)
+                self.tapCell(randomButton)
+            }
+            usleep(200000) // sleep for 0.2 second
+            solveGame()
+        }
+    }
+    
     // MARK: - Button's actions
     
     /**
@@ -409,7 +480,20 @@ class GameGridViewController: UIViewController
      */
     @objc func tapSolve(_ button: UIButton)
     {
-        //solveGame()
+        if !stopSolving {   // the game is actually solving (not stopped)
+            stopSolving = true
+            solveButton.setTitle("Solve", for: .normal)
+            solveButton.setTitleColor(UIColor.green, for: .normal)
+            solveButton.layer.borderColor = UIColor.green.cgColor
+        } else {            // the game is not solving (is stopped)
+            backgroudQueue.async {
+                self.solveGame()
+            }
+            stopSolving = false
+            solveButton.setTitle("Stop", for: .normal)
+            solveButton.setTitleColor(UIColor.red, for: .normal)
+            solveButton.layer.borderColor = UIColor.red.cgColor
+        }
     }
 }
 
