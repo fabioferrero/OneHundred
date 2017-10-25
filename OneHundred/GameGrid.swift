@@ -13,6 +13,7 @@ import Foundation
  */
 class GameGrid
 {
+    // MARK: - Storing Properties
     /**
      The number of rows in the grid.
      */
@@ -29,6 +30,53 @@ class GameGrid
     private var mainGrid: [GridCell?]
     
     /**
+     The history of all selected cell so far.
+     */
+    var selectionHistory: [GridCell]
+    
+    /**
+     An array containing the ordered sequence for a solution, if any
+     */
+    var solution: [GridCell]?
+    
+    /**
+     The current score of the game.
+     */
+    var gameScore: Int
+    
+    // MARK: - Computed Properties
+    
+    /**
+     The last selected cell in the current history, if any.
+     */
+    var lastSelectedCell: GridCell? {
+        return selectionHistory.last
+    }
+    
+    /**
+     Tell if the game is already started or not.
+     */
+    var isGameStarted: Bool {
+        return selectionHistory.last == nil ? false : true
+    }
+    
+    /**
+     The last selected cell in the current solution, if any.
+     */
+    var lastSolutionCell: GridCell? {
+        return solution?.last
+    }
+    
+    /**
+     Tell if the game is actually solved or not.
+     */
+    var isGameSolved: Bool {
+        return gameScore == 100 ? true : false
+    }
+    
+    // MARK: - Initialization
+    
+    /**
      Create a new GameGrid with specified numberOfRows and numberOfColumns.
      */
     init?(withRows numberOfRows: Int, andColumns numberOfColumns: Int)
@@ -40,6 +88,10 @@ class GameGrid
         self.numberOfRows = numberOfRows
         self.numberOfColumns = numberOfColumns
         
+        self.selectionHistory = [GridCell]()
+        
+        self.gameScore = 0
+        
         // Matrix Initialization
         mainGrid = Array<GridCell?>(repeating: nil, count: numberOfRows * numberOfColumns)
         for rowIndex in 0..<numberOfRows {
@@ -48,6 +100,62 @@ class GameGrid
             }
         }
     }
+    
+    // MARK: - Private Methods
+    
+    /**
+     Update all the possible cells with respect the given selected cell.
+     */
+    private func setPossibleCells(for selectedCell: GridCell)
+    {
+        let possibles = possibleCells(forCell: selectedCell)
+        for possibleCell in possibles {
+            if possibleCell.state == .inactive {
+                possibleCell.state = .possible
+            }
+        }
+    }
+    
+    /**
+     Restore all the possible cells with respect the given selected cell.
+     */
+    private func unsetPossibleCells(for selectedCell: GridCell)
+    {
+        let possibles = possibleCells(forCell: selectedCell)
+        for possibleCell in possibles {
+            if possibleCell.state == .possible {
+                possibleCell.state = .inactive
+            }
+        }
+    }
+    
+    /**
+     Activate the given cell by changing its state.
+     
+     - Note: this method also update the state of all possible cells related to the specified one.
+     */
+    private func activateCell(_ selectedCell: GridCell)
+    {
+        selectedCell.state = .active
+        setPossibleCells(for: selectedCell)
+        selectionHistory.append(selectedCell)
+        gameScore += 1
+    }
+    
+    /**
+     Deactivate the given cell by changing its state.
+     
+     - Note: this method also update the state of all possible cells related to the specified one.
+     */
+    private func deactivateCell(_ selectedCell: GridCell)
+    {
+        selectedCell.state = .possible
+        unsetPossibleCells(for: selectedCell)
+        selectionHistory.removeLast()
+        gameScore -= 1
+    }
+    
+    // MARK: - Public API
     
     /**
      Returns a collection of cells that are reacheables from the cell parameter.
@@ -81,6 +189,82 @@ class GameGrid
         }
         return cellArray
     }
+    
+    /**
+     Change the state of the specified cell inside the grid accordingly to its current state.
+     
+     - Note: this method also update the state of all possible cells related to the specified one.
+     */
+    func changeState(for cell: GridCell)
+    {
+        switch cell.state {
+        case .possible:
+            if let lastCell = lastSelectedCell {
+                lastCell.state = .used
+                unsetPossibleCells(for: lastCell)
+            }
+            activateCell(cell)
+        case .active:
+            deactivateCell(cell)
+            if let lastCell = lastSelectedCell {
+                lastCell.state = .active
+                setPossibleCells(for: lastCell)
+            } else {
+                cell.state = .inactive
+            }
+        case .inactive:
+        break   // Do nothing
+        case .used:
+            break   // Do nothing
+        }
+    }
+    
+    /**
+     Find a solution of the game using a recursive greedy approach with backtrack.
+     
+     - Warning: This function is time consuming, so it must be called outside the main queue.
+     
+     - Parameters:
+         - callback: A closure that is called after a solution is found.
+     */
+    func findASolution(_ callback: () -> () ) -> [GridCell]? {
+        // Copy the state of the game in the solution
+        solution = [GridCell](selectionHistory)
+        solveGame()
+        callback()
+        return solution
+    }
+    
+    // MARK: - Solving Engine
+    
+    /**
+     Find a solution of the game using a recursive greedy approach with backtrack.
+     It computes a possible solution for the actual state of the game and save it into a local variable
+     
+     - Note: the game must be started.
+     */
+    private func solveGame() {
+        if let lastCell = lastSolutionCell {
+            let possibles = possibleCells(forCell: lastCell).filter { $0.state == .possible }
+            if possibles.isEmpty {
+                if isGameSolved {
+                    // Solved
+                } else {
+                    // Backtrack
+                }
+            } else {
+                // Choose one possible cell and RECURSION
+                for cell in possibles {
+                    
+                    solveGame()
+                }
+                // If all possible cells are already tried, backtrack
+                
+            }
+        }
+    }
+    
+    // MARK: - Utility methods
     
     /**
      Perform the same action on all cell inside the grid.
