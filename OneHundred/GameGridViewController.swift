@@ -36,22 +36,15 @@ class GameGridViewController: UIViewController
     var numberOfRows = 10
     var numberOfColumns = 10
     
-    var isGameStarted = false
     var stopSolving = true
     
-    var isGameSolved: Bool {
-        return scoreCounter == 100 ? true : false
-    }
-    
-    var lastSelectedCell: GridCell? {
-        return selectionHistory.last
-    }
-    
-    var selectionHistory = [GridCell]()
-    
-    private var scoreCounter: Int = 0 {
-        didSet {
-            scoreLabel.text = String(scoreCounter)
+    private var scoreCounter: Int {
+        get {
+            return gameGrid.gameScore
+        }
+        set {
+            gameGrid.gameScore = newValue
+            scoreLabel.text = String(newValue)
         }
     }
     
@@ -64,13 +57,7 @@ class GameGridViewController: UIViewController
         
         // Instanciate the view
         setupLayout()
-    }
-    
-    
-    override func viewWillLayoutSubviews()
-    {
-        super.viewWillLayoutSubviews()
-
+        
         setupConstraintsForPortrait(true)
     }
     
@@ -301,7 +288,7 @@ class GameGridViewController: UIViewController
         selectedCell.state = .active
         button.backgroundColor = Colors.active
         setPossibleCells(for: selectedCell)
-        selectionHistory.append(selectedCell)
+        gameGrid.selectionHistory.append(selectedCell)
         scoreCounter += 1
     }
     
@@ -316,7 +303,7 @@ class GameGridViewController: UIViewController
         selectedCell.state = .possible
         button.backgroundColor = Colors.possible
         unsetPossibleCells(for: selectedCell)
-        selectionHistory.removeLast()
+        gameGrid.selectionHistory.removeLast()
         scoreCounter -= 1
     }
     
@@ -333,22 +320,21 @@ class GameGridViewController: UIViewController
     private let mainQueue = DispatchQueue.main
     private let backgroudQueue = DispatchQueue.global(qos: .userInitiated)
     
-    // MARK: - Solving Engine
-    
     /**
      Find a solution of the game using a recursive greedy approach with backtrack.
      
      TODO: move to graphic solution finder to only computation finder, while shows graphically
      only the founded solution.
      */
-    private func solveGame() {
+    private func solveGameGraphically() {
+        let timeToPause: UInt32 = 200000 // pause for 0.2 second
         if stopSolving { return }
-        if let lastCell = lastSelectedCell {
+        if let lastCell = gameGrid.lastSelectedCell {
             let possibleCells = gameGrid.possibleCells(forCell: lastCell).filter { $0.state == .possible }
             if possibleCells.isEmpty {
-                if !isGameSolved {
+                if !gameGrid.isGameSolved {
                     // Backtrack
-                    usleep(200000) // sleep for 0.2 second
+                    usleep(timeToPause)
                     mainQueue.sync {
                         let cellButton = buttonForCell(lastCell)
                         self.tapCell(cellButton)
@@ -364,26 +350,26 @@ class GameGridViewController: UIViewController
                         let cellButton = self.buttonForCell(cell)
                         self.tapCell(cellButton)
                     }
-                    usleep(200000) // sleep for 0.2 second
-                    solveGame()
+                    usleep(timeToPause)
+                    solveGameGraphically()
                 }
                 if stopSolving { return }
                 // If all possible cells are already tried, backtrack
-                usleep(200000) // sleep for 0.2 second
+                usleep(timeToPause)
                 mainQueue.sync {
                     let cellButton = buttonForCell(lastCell)
                     self.tapCell(cellButton)
                 }
             }
-        } else {
+        } else { // Start the game from a random cell
             mainQueue.sync {
                 let randomFrom0To99 = self.randomInt(from: 0, to: 99)!
                 let randomCell = self.gameGrid.cellAt(sequentialIndex: randomFrom0To99)!
                 let randomButton = self.buttonForCell(randomCell)
                 self.tapCell(randomButton)
             }
-            usleep(200000) // sleep for 0.2 second
-            solveGame()
+            usleep(timeToPause)
+            solveGameGraphically()
         }
     }
     
@@ -396,9 +382,8 @@ class GameGridViewController: UIViewController
     {
         button.pulse()
         gameGrid.forAllCellsPerform{ $0.state = .inactive }
-        isGameStarted = false
         scoreCounter = 0
-        selectionHistory.removeAll()
+        gameGrid.selectionHistory.removeAll()
         for row in 0..<numberOfRows {
             for column in 0..<numberOfColumns {
                 let stackView = gridView.arrangedSubviews[row] as! UIStackView
@@ -413,17 +398,16 @@ class GameGridViewController: UIViewController
      */
     @objc func tapBack(_ button: UIButton)
     {
-        if let selectedCell = lastSelectedCell {
+        if let selectedCell = gameGrid.lastSelectedCell {
             let cellButton = buttonForCell(selectedCell)
             deactivateCell(selectedCell, forButton: cellButton)
-            if let lastCell = lastSelectedCell {
+            if let lastCell = gameGrid.lastSelectedCell {
                 lastCell.state = .active
                 buttonForCell(lastCell).backgroundColor = Colors.active
                 setPossibleCells(for: lastCell)
             } else {
                 selectedCell.state = .inactive
                 cellButton.backgroundColor = Colors.inactive
-                isGameStarted = false
             }
         }
     }
@@ -436,10 +420,10 @@ class GameGridViewController: UIViewController
         guard let buttonID = button.accessibilityIdentifier else { return }
         guard let selectedCell = gameGrid.cellAt(sequentialIdentifier: buttonID) else { return }
         
-        if isGameStarted {
+        if gameGrid.isGameStarted {
             switch selectedCell.state {
             case .possible:
-                if let lastCell = lastSelectedCell {
+                if let lastCell = gameGrid.lastSelectedCell {
                     lastCell.state = .used
                     buttonForCell(lastCell).backgroundColor = Colors.used
                     unsetPossibleCells(for: lastCell)
@@ -447,14 +431,13 @@ class GameGridViewController: UIViewController
                 activateCell(selectedCell, forButton: button)
             case .active:
                 deactivateCell(selectedCell, forButton: button)
-                if let lastCell = lastSelectedCell {
+                if let lastCell = gameGrid.lastSelectedCell {
                     lastCell.state = .active
                     buttonForCell(lastCell).backgroundColor = Colors.active
                     setPossibleCells(for: lastCell)
                 } else {
                     selectedCell.state = .inactive
                     button.backgroundColor = Colors.inactive
-                    isGameStarted = false
                 }
             case .inactive:
                 break   // Do nothing
@@ -464,7 +447,6 @@ class GameGridViewController: UIViewController
         } else {
             gameGrid.forAllCellsPerform{ $0.state = .inactive }
             activateCell(selectedCell, forButton: button)
-            isGameStarted = true
         }
     }
     
@@ -482,7 +464,7 @@ class GameGridViewController: UIViewController
             solutionLoadingLabel.isHidden = true
         } else {            // the game is not solving (is stopped)
             backgroudQueue.async {
-                self.solveGame()
+                self.solveGameGraphically()
             }
             stopSolving = false
             solveButton.setTitle("Stop", for: .normal)
