@@ -54,13 +54,6 @@ class GameGrid
     }
     
     /**
-     Tell if the game is already started or not.
-     */
-    var isGameStarted: Bool {
-        return selectionHistory.last == nil ? false : true
-    }
-    
-    /**
      The last selected cell in the current solution, if any.
      */
     var lastSolutionCell: GridCell? {
@@ -68,10 +61,24 @@ class GameGrid
     }
     
     /**
+     Tell if the game is already started or not.
+     */
+    var isGameStarted: Bool {
+        return selectionHistory.last == nil ? false : true
+    }
+    
+    /**
      Tell if the game is actually solved or not.
      */
     var isGameSolved: Bool {
         return gameScore == 100 ? true : false
+    }
+    
+    /**
+     Tell if a solution is found
+     */
+    var isSolutionFound: Bool {
+        return solution?.count ?? 0 == 100 ? true : false
     }
     
     // MARK: - Initialization
@@ -223,9 +230,9 @@ class GameGrid
      Find a solution of the game using a recursive greedy approach with backtrack.
      
      - Warning: This function is time consuming, so it must be called outside the main queue.
-     
      - Parameters:
          - callback: A closure that is called after a solution is found.
+     - Note: The game must be started.
      */
     func findASolution(_ callback: () -> () ) -> [GridCell]? {
         // Copy the state of the game in the solution
@@ -244,22 +251,34 @@ class GameGrid
      - Note: the game must be started.
      */
     private func solveGame() {
-        if let lastCell = lastSolutionCell {
+        if let lastCell = lastSelectedCell {
             let possibles = possibleCells(forCell: lastCell).filter { $0.state == .possible }
             if possibles.isEmpty {
-                if isGameSolved {
+                if isSolutionFound {
                     // Solved
+                    // Save the result on disk if not yet found
                 } else {
                     // Backtrack
+                    deactivateCell(lastCell)
+                    if let lastCell = lastSelectedCell {
+                        lastCell.state = .active
+                        setPossibleCells(for: lastCell)
+                    }
                 }
             } else {
                 // Choose one possible cell and RECURSION
                 for cell in possibles {
-                    
+                    lastCell.state = .used
+                    unsetPossibleCells(for: lastCell)
+                    activateCell(cell)
                     solveGame()
                 }
                 // If all possible cells are already tried, backtrack
-                
+                deactivateCell(lastCell)
+                if let lastCell = lastSelectedCell {
+                    lastCell.state = .active
+                    setPossibleCells(for: lastCell)
+                }
             }
         }
     }

@@ -466,6 +466,11 @@ class GameGridViewController: UIViewController
         } else {            // the game is not solving (is stopped)
             backgroudQueue.async {
                 self.solveGameGraphically()
+//                self.gameGrid.findASolution {
+//                    print(self.gameGrid.selectionHistory.map {
+//                        "(\($0.row),\($0.column))"
+//                    })
+//                }
             }
             stopSolving = false
             solveButton.setTitle("Stop", for: .normal)
