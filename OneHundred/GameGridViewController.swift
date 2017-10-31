@@ -291,6 +291,7 @@ class GameGridViewController: UIViewController
         setPossibleCells(for: selectedCell)
         gameGrid.selectionHistory.append(selectedCell)
         scoreCounter += 1
+        button.setTitle(String(scoreCounter), for: .normal)
     }
     
     /**
@@ -306,6 +307,7 @@ class GameGridViewController: UIViewController
         unsetPossibleCells(for: selectedCell)
         gameGrid.selectionHistory.removeLast()
         scoreCounter -= 1
+        button.setTitle("", for: .normal)
     }
     
     /**
@@ -390,6 +392,7 @@ class GameGridViewController: UIViewController
                 let stackView = gridView.arrangedSubviews[row] as! UIStackView
                 let button = stackView.arrangedSubviews[column] as! UIButton
                 button.backgroundColor = Colors.inactive
+                button.setTitle("", for: .normal)
             }
         }
     }
