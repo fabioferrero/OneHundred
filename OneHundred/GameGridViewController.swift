@@ -98,6 +98,7 @@ class GameGridViewController: UIViewController
     {
         scoreLabel.leadingAnchor.constraint(equalTo: gridView.leadingAnchor).isActive = active
         scoreLabel.centerYAnchor.constraint(equalTo: gridView.topAnchor, constant: -80).isActive = active
+        scoreLabel.widthAnchor.constraint(equalToConstant: 40).isActive = active
     }
     
     private func setupBackButtonConstraintsForPortrait(_ active: Bool)
@@ -108,7 +109,7 @@ class GameGridViewController: UIViewController
     
     private func setupSolutionLoadingConstraintForPortrait(_ active: Bool)
     {
-        spinIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 160).isActive = active
+        spinIndicator.leadingAnchor.constraint(equalTo: scoreLabel.trailingAnchor, constant: 20).isActive = active
         spinIndicator.centerYAnchor.constraint(equalTo: scoreLabel.centerYAnchor).isActive = active
         solutionLoadingLabel.leadingAnchor.constraint(equalTo: spinIndicator.trailingAnchor, constant: 10).isActive = active
         solutionLoadingLabel.centerYAnchor.constraint(equalTo: spinIndicator.centerYAnchor).isActive = active
@@ -219,7 +220,7 @@ class GameGridViewController: UIViewController
         
         solutionLoadingLabel.translatesAutoresizingMaskIntoConstraints = false
         solutionLoadingLabel.text = "Finding a solution..."
-        solutionLoadingLabel.font = UIFont.systemFont(ofSize: 24)
+        solutionLoadingLabel.font = UIFont.systemFont(ofSize: 22)
         solutionLoadingLabel.isHidden = true
         
         spinIndicator.translatesAutoresizingMaskIntoConstraints = false
