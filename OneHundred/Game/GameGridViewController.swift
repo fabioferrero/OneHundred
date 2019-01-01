@@ -8,48 +8,23 @@
 
 import UIKit
 
-class GameGridViewController: UIViewController
-{
-    // MARK: - View
+final class GameGridViewController: ViewController {
     
     // The cell grid composed by one hundred buttons
-    var gridView: UIStackView!
-    // The reset button
-    var resetButton: UIButton!
-    // The solve button
-    var solveButton: UIButton!
-    // The score label
-    var scoreLabel: UILabel!
-    // The solving loading label and activity indicator
-    var solutionLoadingLabel: UILabel!
-    var spinIndicator: UIActivityIndicatorView!
-    // The back button
-    var backButton: UIButton!
+    @IBOutlet private var gridView: UIStackView!
+    
+    @IBOutlet private var resetButton: UIButton!
+    @IBOutlet private var solveButton: UIButton!
+    @IBOutlet private var scoreLabel: UILabel!
+    @IBOutlet private var solutionLoadingLabel: UILabel!
+    @IBOutlet private var spinIndicator: UIActivityIndicatorView!
+    @IBOutlet private var backButton: UIButton!
     
     // MARK: - Model
     
-    // The model for the grid
     var gameGrid: GameGrid!
     
-    // MARK: - Controller
-    
-    var numberOfRows = 10
-    var numberOfColumns = 10
-    
-    var stopSolving = true
-    
-    private var scoreCounter: Int {
-        get {
-            return gameGrid.gameScore
-        }
-        set {
-            gameGrid.gameScore = newValue
-            scoreLabel.text = String(newValue)
-        }
-    }
-    
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         // Instanciate the model
@@ -59,6 +34,35 @@ class GameGridViewController: UIViewController
         setupLayout()
         
         setupConstraintsForPortrait(true)
+    }
+    
+    // MARK: - Controller
+    
+    var numberOfRows = 10
+    var numberOfColumns = 10
+    
+    var stopSolving = true
+    
+    private let mainQueue = DispatchQueue.main
+    private let backgroudQueue = DispatchQueue.global(qos: .userInitiated)
+}
+
+extension GameGridViewController: StoryboardInstantiable {
+    static var storyboard: Storyboard { return .game }
+}
+
+// MARK: - Private
+
+extension GameGridViewController {
+    
+    private var scoreCounter: Int {
+        get {
+            return gameGrid.gameScore
+        }
+        set {
+            gameGrid.gameScore = newValue
+            scoreLabel.text = String(newValue)
+        }
     }
     
     private struct Colors {
@@ -141,7 +145,7 @@ class GameGridViewController: UIViewController
                 button.backgroundColor = Colors.inactive
                 button.accessibilityIdentifier = String(cellCount)
                 cellCount += 1
-                button.addTarget(self, action: #selector(tapCell(_:)), for: UIControlEvents.touchUpInside)
+                button.addTarget(self, action: #selector(tapCell(_:)), for: UIControl.Event.touchUpInside)
                 stackView.addArrangedSubview(button)
             }
             stackView.axis = .horizontal
@@ -215,7 +219,7 @@ class GameGridViewController: UIViewController
     {
         solutionLoadingLabel = UILabel()
         view.addSubview(solutionLoadingLabel)
-        spinIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        spinIndicator = UIActivityIndicatorView(style: .gray)
         view.addSubview(spinIndicator)
         
         solutionLoadingLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -319,9 +323,6 @@ class GameGridViewController: UIViewController
         let difference = Double(upperBound - lowerBound)
         return Int(Double(arc4random()) / Double(UInt32.max) * difference) + lowerBound
     }
-    
-    private let mainQueue = DispatchQueue.main
-    private let backgroudQueue = DispatchQueue.global(qos: .userInitiated)
     
     /**
      Find a solution of the game using a recursive greedy approach with backtrack.

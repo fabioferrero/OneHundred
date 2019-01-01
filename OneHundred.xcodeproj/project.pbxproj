@@ -7,26 +7,48 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B45608DA21DBB5D700438EDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608CB21DBB5D700438EDA /* AppDelegate.swift */; };
+		B45608DB21DBB5D700438EDA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608CC21DBB5D700438EDA /* Coordinator.swift */; };
+		B45608DC21DBB5D700438EDA /* Year.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608CF21DBB5D700438EDA /* Year.swift */; };
+		B45608DD21DBB5D700438EDA /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D021DBB5D700438EDA /* Day.swift */; };
+		B45608DE21DBB5D700438EDA /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D121DBB5D700438EDA /* Month.swift */; };
+		B45608DF21DBB5D700438EDA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D221DBB5D700438EDA /* DateExtension.swift */; };
+		B45608E021DBB5D700438EDA /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D321DBB5D700438EDA /* StoryboardInstantiable.swift */; };
+		B45608E121DBB5D700438EDA /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D521DBB5D700438EDA /* Label.swift */; };
+		B45608E221DBB5D700438EDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D621DBB5D700438EDA /* ViewController.swift */; };
+		B45608E321DBB5D700438EDA /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D721DBB5D700438EDA /* Button.swift */; };
+		B45608E421DBB5D700438EDA /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D821DBB5D700438EDA /* NavigationController.swift */; };
+		B45608E521DBB5D700438EDA /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D921DBB5D700438EDA /* AppCoordinator.swift */; };
 		E524DF6D1F8BAC6B0072E3CC /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E524DF6C1F8BAC6B0072E3CC /* GridCell.swift */; };
 		E554A9721F8EA531005CF827 /* UIButtonExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554A9711F8EA531005CF827 /* UIButtonExtention.swift */; };
-		E5C2D5F11F88FCC40069D77D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C2D5F01F88FCC40069D77D /* AppDelegate.swift */; };
 		E5C2D5F31F88FCC40069D77D /* GameGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C2D5F21F88FCC40069D77D /* GameGridViewController.swift */; };
-		E5C2D5F61F88FCC40069D77D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C2D5F41F88FCC40069D77D /* Main.storyboard */; };
+		E5C2D5F61F88FCC40069D77D /* Game.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C2D5F41F88FCC40069D77D /* Game.storyboard */; };
 		E5C2D5F81F88FCC40069D77D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C2D5F71F88FCC40069D77D /* Assets.xcassets */; };
 		E5C2D5FB1F88FCC40069D77D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5C2D5F91F88FCC40069D77D /* LaunchScreen.storyboard */; };
 		E5C2D60A1F8945550069D77D /* GameGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C2D6091F8945550069D77D /* GameGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B45608CB21DBB5D700438EDA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B45608CC21DBB5D700438EDA /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		B45608CF21DBB5D700438EDA /* Year.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Year.swift; sourceTree = "<group>"; };
+		B45608D021DBB5D700438EDA /* Day.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
+		B45608D121DBB5D700438EDA /* Month.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
+		B45608D221DBB5D700438EDA /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		B45608D321DBB5D700438EDA /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
+		B45608D521DBB5D700438EDA /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		B45608D621DBB5D700438EDA /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B45608D721DBB5D700438EDA /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		B45608D821DBB5D700438EDA /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		B45608D921DBB5D700438EDA /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E524DF6C1F8BAC6B0072E3CC /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
 		E554A9711F8EA531005CF827 /* UIButtonExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtention.swift; sourceTree = "<group>"; };
 		E5C2D5ED1F88FCC40069D77D /* OneHundred.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneHundred.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5C2D5F01F88FCC40069D77D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5C2D5F21F88FCC40069D77D /* GameGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGridViewController.swift; sourceTree = "<group>"; };
-		E5C2D5F51F88FCC40069D77D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E5C2D5F51F88FCC40069D77D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Game.storyboard; sourceTree = "<group>"; };
 		E5C2D5F71F88FCC40069D77D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5C2D5FA1F88FCC40069D77D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		E5C2D5FC1F88FCC40069D77D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5C2D5FC1F88FCC40069D77D /* App.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = App.plist; sourceTree = "<group>"; };
 		E5C2D6091F8945550069D77D /* GameGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -41,6 +63,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B45608CA21DBB59200438EDA /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				B45608D921DBB5D700438EDA /* AppCoordinator.swift */,
+				E5C2D5F21F88FCC40069D77D /* GameGridViewController.swift */,
+				E5C2D6091F8945550069D77D /* GameGrid.swift */,
+				E524DF6C1F8BAC6B0072E3CC /* GridCell.swift */,
+				E5C2D5F41F88FCC40069D77D /* Game.storyboard */,
+				E554A9711F8EA531005CF827 /* UIButtonExtention.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		B45608CD21DBB5D700438EDA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B45608CE21DBB5D700438EDA /* Date */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B45608CE21DBB5D700438EDA /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				B45608CF21DBB5D700438EDA /* Year.swift */,
+				B45608D021DBB5D700438EDA /* Day.swift */,
+				B45608D121DBB5D700438EDA /* Month.swift */,
+				B45608D221DBB5D700438EDA /* DateExtension.swift */,
+			);
+			path = Date;
+			sourceTree = "<group>";
+		};
+		B45608D421DBB5D700438EDA /* Base UI */ = {
+			isa = PBXGroup;
+			children = (
+				B45608D521DBB5D700438EDA /* Label.swift */,
+				B45608D621DBB5D700438EDA /* ViewController.swift */,
+				B45608D721DBB5D700438EDA /* Button.swift */,
+				B45608D821DBB5D700438EDA /* NavigationController.swift */,
+			);
+			path = "Base UI";
+			sourceTree = "<group>";
+		};
+		B45608E621DBB7BB00438EDA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E5C2D5F91F88FCC40069D77D /* LaunchScreen.storyboard */,
+				E5C2D5F71F88FCC40069D77D /* Assets.xcassets */,
+				E5C2D5FC1F88FCC40069D77D /* App.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		E5C2D5E41F88FCC40069D77D = {
 			isa = PBXGroup;
 			children = (
@@ -60,25 +135,15 @@
 		E5C2D5EF1F88FCC40069D77D /* OneHundred */ = {
 			isa = PBXGroup;
 			children = (
-				E5C2D5F21F88FCC40069D77D /* GameGridViewController.swift */,
-				E5C2D6091F8945550069D77D /* GameGrid.swift */,
-				E524DF6C1F8BAC6B0072E3CC /* GridCell.swift */,
-				E5C2D5F41F88FCC40069D77D /* Main.storyboard */,
-				E554A9711F8EA531005CF827 /* UIButtonExtention.swift */,
-				E5C2D6021F88FCE40069D77D /* Supporting Files */,
+				B45608CB21DBB5D700438EDA /* AppDelegate.swift */,
+				B45608CA21DBB59200438EDA /* Game */,
+				B45608CC21DBB5D700438EDA /* Coordinator.swift */,
+				B45608D321DBB5D700438EDA /* StoryboardInstantiable.swift */,
+				B45608E621DBB7BB00438EDA /* Resources */,
+				B45608D421DBB5D700438EDA /* Base UI */,
+				B45608CD21DBB5D700438EDA /* Extensions */,
 			);
 			path = OneHundred;
-			sourceTree = "<group>";
-		};
-		E5C2D6021F88FCE40069D77D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				E5C2D5F01F88FCC40069D77D /* AppDelegate.swift */,
-				E5C2D5F71F88FCC40069D77D /* Assets.xcassets */,
-				E5C2D5F91F88FCC40069D77D /* LaunchScreen.storyboard */,
-				E5C2D5FC1F88FCC40069D77D /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -108,11 +173,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = fabfer_dev;
 				TargetAttributes = {
 					E5C2D5EC1F88FCC40069D77D = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -142,7 +208,7 @@
 			files = (
 				E5C2D5FB1F88FCC40069D77D /* LaunchScreen.storyboard in Resources */,
 				E5C2D5F81F88FCC40069D77D /* Assets.xcassets in Resources */,
-				E5C2D5F61F88FCC40069D77D /* Main.storyboard in Resources */,
+				E5C2D5F61F88FCC40069D77D /* Game.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,22 +220,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5C2D60A1F8945550069D77D /* GameGrid.swift in Sources */,
+				B45608DF21DBB5D700438EDA /* DateExtension.swift in Sources */,
+				B45608E121DBB5D700438EDA /* Label.swift in Sources */,
 				E5C2D5F31F88FCC40069D77D /* GameGridViewController.swift in Sources */,
-				E5C2D5F11F88FCC40069D77D /* AppDelegate.swift in Sources */,
+				B45608E521DBB5D700438EDA /* AppCoordinator.swift in Sources */,
+				B45608DE21DBB5D700438EDA /* Month.swift in Sources */,
+				B45608DD21DBB5D700438EDA /* Day.swift in Sources */,
+				B45608DB21DBB5D700438EDA /* Coordinator.swift in Sources */,
+				B45608E421DBB5D700438EDA /* NavigationController.swift in Sources */,
+				B45608E321DBB5D700438EDA /* Button.swift in Sources */,
 				E524DF6D1F8BAC6B0072E3CC /* GridCell.swift in Sources */,
+				B45608E221DBB5D700438EDA /* ViewController.swift in Sources */,
+				B45608DA21DBB5D700438EDA /* AppDelegate.swift in Sources */,
+				B45608E021DBB5D700438EDA /* StoryboardInstantiable.swift in Sources */,
 				E554A9721F8EA531005CF827 /* UIButtonExtention.swift in Sources */,
+				B45608DC21DBB5D700438EDA /* Year.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		E5C2D5F41F88FCC40069D77D /* Main.storyboard */ = {
+		E5C2D5F41F88FCC40069D77D /* Game.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E5C2D5F51F88FCC40069D77D /* Base */,
 			);
-			name = Main.storyboard;
+			name = Game.storyboard;
 			sourceTree = "<group>";
 		};
 		E5C2D5F91F88FCC40069D77D /* LaunchScreen.storyboard */ = {
@@ -197,6 +274,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -204,6 +282,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -254,6 +333,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -261,6 +341,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -296,12 +377,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2K55BVQV8;
-				INFOPLIST_FILE = OneHundred/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				INFOPLIST_FILE = "$(SRCROOT)/OneHundred/Resources/App.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.fabfer.OneHundred;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -312,12 +393,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2K55BVQV8;
-				INFOPLIST_FILE = OneHundred/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				INFOPLIST_FILE = "$(SRCROOT)/OneHundred/Resources/App.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.fabfer.OneHundred;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

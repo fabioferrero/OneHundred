@@ -1,21 +1,29 @@
 //
 //  AppDelegate.swift
-//  OneHundred
+//  App Architecture
 //
-//  Created by Fabio Ferrero on 07/10/17.
-//  Copyright © 2017 fabfer_dev. All rights reserved.
+//  Created by Fabio Ferrero on 27/11/2018.
+//  Copyright © 2018 Fabio Ferrero. All rights reserved.
 //
 
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var appCoordinator: AppCoordinator?
 
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        let navigationController = NavigationController()
+        appCoordinator = AppCoordinator(navigationController: navigationController)
+        appCoordinator?.start()
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+        
         return true
     }
 
