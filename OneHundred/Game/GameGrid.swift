@@ -8,86 +8,29 @@
 
 import Foundation
 
-/**
- A grid model that contains instances of GridCells class.
- */
-class GameGrid
-{
-    // MARK: - Storing Properties
-    /**
-     The number of rows in the grid.
-     */
+/// A grid model that contains instances of GridCells class.
+class GameGrid {
+    
+    /// The number of rows in the grid.
     let numberOfRows: Int
     
-    /**
-     The number of columns in the grid.
-     */
+    /// The number of columns in the grid.
     let numberOfColumns: Int
     
-    /**
-     The internal array that implements the matrix layout.
-     */
+    /// The internal array that implements the matrix layout.
     private var mainGrid: [GridCell?]
     
-    /**
-     The history of all selected cell so far.
-     */
+    /// The history of all selected cell so far.
     var selectionHistory: [GridCell]
     
-    /**
-     An array containing the ordered sequence for a solution, if any
-     */
+    /// An array containing the ordered sequence for a solution, if any.
     var solution: [GridCell]?
     
-    /**
-     The current score of the game.
-     */
+    /// The current score of the game.
     var gameScore: Int
     
-    // MARK: - Computed Properties
-    
-    /**
-     The last selected cell in the current history, if any.
-     */
-    var lastSelectedCell: GridCell? {
-        return selectionHistory.last
-    }
-    
-    /**
-     The last selected cell in the current solution, if any.
-     */
-    var lastSolutionCell: GridCell? {
-        return solution?.last
-    }
-    
-    /**
-     Tell if the game is already started or not.
-     */
-    var isGameStarted: Bool {
-        return selectionHistory.last == nil ? false : true
-    }
-    
-    /**
-     Tell if the game is actually solved or not.
-     */
-    var isGameSolved: Bool {
-        return gameScore == 100 ? true : false
-    }
-    
-    /**
-     Tell if a solution is found
-     */
-    var isSolutionFound: Bool {
-        return solution?.count ?? 0 == 100 ? true : false
-    }
-    
-    // MARK: - Initialization
-    
-    /**
-     Create a new GameGrid with specified numberOfRows and numberOfColumns.
-     */
-    init?(numberOfRows: Int, numberOfColumns: Int)
-    {
+    /// Create a new GameGrid with specified numberOfRows and numberOfColumns.
+    init?(numberOfRows: Int, numberOfColumns: Int) {
         guard numberOfRows > 0 && numberOfColumns > 0 else {
             return nil
         }
@@ -107,14 +50,55 @@ class GameGrid
             }
         }
     }
+}
+
+// MARK: - Computed Properties
+
+extension GameGrid {
     
-    // MARK: - Private Methods
+    /// The last selected cell in the current history, if any.
+    var lastSelectedCell: GridCell? {
+        return selectionHistory.last
+    }
     
-    /**
-     Update all the possible cells with respect the given selected cell.
-     */
-    private func setPossibleCells(for selectedCell: GridCell)
-    {
+    /// The last selected cell in the current solution, if any.
+    var lastSolutionCell: GridCell? {
+        return solution?.last
+    }
+    
+    /// Tell if the game is already started or not.
+    var isGameStarted: Bool {
+        return selectionHistory.last == nil ? false : true
+    }
+    
+    /// Tell if the game is actually solved or not.
+    var isGameSolved: Bool {
+        return gameScore == 100 ? true : false
+    }
+    
+    /// Tell if a solution is found
+    var isSolutionFound: Bool {
+        return (solution?.count ?? 0 == 100) ? true : false
+    }
+}
+
+// MARK: - Private
+
+extension GameGrid {
+    
+    /// Check the validity of the given coordinates for a cell inside the grid.
+    private func isValidCellIndex(row: Int, column: Int) -> Bool {
+        return row >= 0 && row < numberOfRows && column >= 0 && column < numberOfColumns
+    }
+    
+    /// Translate 2D coordinate (row, column) into the sequential index for
+    /// accessing the internal array.
+    private func matrixIndex(_ row: Int, _ column: Int) -> Int {
+        return row * numberOfColumns + column
+    }
+    
+    /// Update all the possible cells with respect the given selected cell.
+    private func setPossibleCells(for selectedCell: GridCell) {
         let possibles = possibleCells(forCell: selectedCell)
         for possibleCell in possibles {
             if possibleCell.state == .inactive {
@@ -123,11 +107,8 @@ class GameGrid
         }
     }
     
-    /**
-     Restore all the possible cells with respect the given selected cell.
-     */
-    private func unsetPossibleCells(for selectedCell: GridCell)
-    {
+    /// Restore all the possible cells with respect the given selected cell.
+    private func unsetPossibleCells(for selectedCell: GridCell) {
         let possibles = possibleCells(forCell: selectedCell)
         for possibleCell in possibles {
             if possibleCell.state == .possible {
@@ -141,8 +122,7 @@ class GameGrid
      
      - Note: this method also update the state of all possible cells related to the specified one.
      */
-    private func activateCell(_ selectedCell: GridCell)
-    {
+    private func activateCell(_ selectedCell: GridCell) {
         selectedCell.state = .active
         setPossibleCells(for: selectedCell)
         selectionHistory.append(selectedCell)
@@ -154,21 +134,21 @@ class GameGrid
      
      - Note: this method also update the state of all possible cells related to the specified one.
      */
-    private func deactivateCell(_ selectedCell: GridCell)
-    {
+    private func deactivateCell(_ selectedCell: GridCell) {
         selectedCell.state = .possible
         unsetPossibleCells(for: selectedCell)
         selectionHistory.removeLast()
         gameScore -= 1
     }
+}
+
+// MARK: - API
+
+extension GameGrid {
     
-    // MARK: - Public API
-    
-    /**
-     Returns a collection of cells that are reacheables from the cell parameter.
-     */
-    func possibleCells(forCell cell: GridCell) -> [GridCell] // It supposes the cell being in the grid
-    {
+    /// Returns a collection of cells that are reacheables from the cell parameter.
+    /// It supposes the cell being in the grid.
+    func possibleCells(forCell cell: GridCell) -> [GridCell] {
         var cellArray = [GridCell]()
         if let possibleCell = cell.diagonal(.upLeft)?.diagonal(.upLeft) {
             cellArray.append(possibleCell)  // top-left
@@ -202,8 +182,7 @@ class GameGrid
      
      - Note: this method also update the state of all possible cells related to the specified one.
      */
-    func changeState(for cell: GridCell)
-    {
+    func changeState(for cell: GridCell) {
         switch cell.state {
         case .possible:
             if let lastCell = lastSelectedCell {
@@ -241,8 +220,45 @@ class GameGrid
         callback()
         return solution
     }
+}
+
+// MARK: - Utility
+
+extension GameGrid {
     
-    // MARK: - Solving Engine
+    /// Perform the same action on all cell inside the grid.
+    func forAllCellsPerform(_ action: (GridCell) -> ()) {
+        for element in mainGrid {
+            if let cell = element {
+                action(cell)
+            }
+        }
+    }
+    
+    /// Returns the cell at the specified sequentialIndex inside the grid.
+    func cellAt(sequentialIndex index: Int) -> GridCell? {
+        if index >= numberOfRows * numberOfColumns || index < 0 {
+            return nil
+        }
+        return mainGrid[index]
+    }
+    
+    /// Returns the cell that corresponds to the sequentialIdentifier inside th grid.
+    func cellAt(sequentialIdentifier id: String) -> GridCell? {
+        guard let index = Int(id) else {
+            print("Impossible to translate index from string")
+            return nil
+        }
+        if index >= numberOfRows * numberOfColumns || index < 0 {
+            return nil
+        }
+        return mainGrid[index]
+    }
+}
+
+// MARK: - Solving Engine
+
+extension GameGrid {
     
     /**
      Find a solution of the game using a recursive greedy approach with backtrack.
@@ -282,64 +298,14 @@ class GameGrid
             }
         }
     }
+}
+
+// MARK: - Subscript
+
+extension GameGrid {
     
-    // MARK: - Utility methods
-    
-    /**
-     Perform the same action on all cell inside the grid.
-     */
-    func forAllCellsPerform(_ action: (GridCell) -> ()) {
-        for element in mainGrid {
-            if let cell = element {
-                action(cell)
-            }
-        }
-    }
-    
-    /**
-     Returns the cell at the specified sequentialIndex inside the grid.
-     */
-    func cellAt(sequentialIndex index: Int) -> GridCell?
-    {
-        if index >= numberOfRows * numberOfColumns || index < 0 {
-            return nil
-        }
-        return mainGrid[index]
-    }
-    
-    /**
-     Returns the cell that corresponds to the sequentialIdentifier inside th grid.
-     */
-    func cellAt(sequentialIdentifier id: String) -> GridCell?
-    {
-        guard let index = Int(id) else {
-            print("Impossible to translate index from string")
-            return nil
-        }
-        if index >= numberOfRows * numberOfColumns || index < 0 {
-            return nil
-        }
-        return mainGrid[index]
-    }
-    
-    /**
-     Check the validity of the given coordinates for a cell inside the grid.
-     */
-    private func isValidCellIndex(row: Int, column: Int) -> Bool
-    {
-        return row >= 0 && row < numberOfRows && column >= 0 && column < numberOfColumns
-    }
-    
-    /**
-     Translate 2D coordinate (row, column) into the sequential index for accessing the internal array.
-     */
-    private func matrixIndex(_ row: Int, _ column: Int) -> Int {
-        return row * numberOfColumns + column
-    }
-    
-    // Subscript syntax for calls as grid[row, column]
-    subscript(row: Int, column: Int) -> GridCell?
-    {
+    /// Subscript syntax for calls as grid[row, column]
+    subscript(row: Int, column: Int) -> GridCell? {
         get {
             if isValidCellIndex(row: row, column: column) {
                 return mainGrid[matrixIndex(row, column)]
@@ -354,25 +320,10 @@ class GameGrid
         }
     }
     
-    // Subscript syntax for calls as grid[position] with position as tuple (row, column)
-    subscript(position: (row: Int, column: Int)) -> GridCell?
-    {
-        get {
-            let newRow = position.row
-            let newColumn = position.column
-            if isValidCellIndex(row: newRow, column: newColumn) {
-                return mainGrid[matrixIndex(newRow, newColumn)]
-            } else {
-                return nil
-            }
-        }
-        set {
-            let newRow = position.row
-            let newColumn = position.column
-            if isValidCellIndex(row: newRow, column: newColumn) {
-                mainGrid[matrixIndex(newRow, newColumn)] = newValue
-            }
-        }
+    /// Subscript syntax for calls as grid[position] with position as tuple (row, column)
+    subscript(position: (row: Int, column: Int)) -> GridCell? {
+        get { return self[position.row, position.column] }
+        set { self[position.row, position.column] = newValue }
     }
 }
 

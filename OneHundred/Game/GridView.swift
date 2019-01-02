@@ -18,8 +18,8 @@ final class GridView: UIView {
     
     private var grid: UIStackView!
     
-    var numberOfRows: Int!
-    var numberOfColumns: Int!
+    private var numberOfRows: Int!
+    private var numberOfColumns: Int!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -67,7 +67,6 @@ final class GridView: UIView {
     
     // MARK: - Actions
     
-    /// The method to execute when a cell in the grid is tapped.
     @objc func tapCell(_ button: Button) {
         delegate?.gridView(self, didTapOnButton: button)
     }
@@ -77,9 +76,7 @@ final class GridView: UIView {
 
 extension GridView {
     
-    /**
-     Returns the button in the view that is related to the given cell in the model.
-     */
+    /// Returns the button in the view that is related to the given cell in the model.
     func buttonForCell(_ cell: GridCell) -> Button {
         let stackView = grid.arrangedSubviews[cell.row] as! UIStackView
         let cellButton = stackView.arrangedSubviews[cell.column] as! Button

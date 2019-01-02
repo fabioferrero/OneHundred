@@ -252,10 +252,8 @@ extension GameGridViewController: GridViewDelegate {
                     selectedCell.state = .inactive
                     button.backgroundColor = Colors.inactive
                 }
-            case .inactive:
-            break   // Do nothing
-            case .used:
-                break   // Do nothing
+            case .inactive: break   // Do nothing
+            case .used: break   // Do nothing
             }
         } else {
             gameGrid.forAllCellsPerform{ $0.state = .inactive }
