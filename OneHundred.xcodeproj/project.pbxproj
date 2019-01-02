@@ -19,6 +19,8 @@
 		B45608E321DBB5D700438EDA /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D721DBB5D700438EDA /* Button.swift */; };
 		B45608E421DBB5D700438EDA /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D821DBB5D700438EDA /* NavigationController.swift */; };
 		B45608E521DBB5D700438EDA /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45608D921DBB5D700438EDA /* AppCoordinator.swift */; };
+		B4EBA3AD21DD0A3E0058B0DC /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EBA3AC21DD0A3E0058B0DC /* GridView.swift */; };
+		B4EBA3AF21DD0DD90058B0DC /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EBA3AE21DD0DD90058B0DC /* Palette.swift */; };
 		E524DF6D1F8BAC6B0072E3CC /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E524DF6C1F8BAC6B0072E3CC /* GridCell.swift */; };
 		E554A9721F8EA531005CF827 /* UIButtonExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554A9711F8EA531005CF827 /* UIButtonExtention.swift */; };
 		E5C2D5F31F88FCC40069D77D /* GameGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C2D5F21F88FCC40069D77D /* GameGridViewController.swift */; };
@@ -41,6 +43,8 @@
 		B45608D721DBB5D700438EDA /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		B45608D821DBB5D700438EDA /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		B45608D921DBB5D700438EDA /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		B4EBA3AC21DD0A3E0058B0DC /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		B4EBA3AE21DD0DD90058B0DC /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		E524DF6C1F8BAC6B0072E3CC /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
 		E554A9711F8EA531005CF827 /* UIButtonExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtention.swift; sourceTree = "<group>"; };
 		E5C2D5ED1F88FCC40069D77D /* OneHundred.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneHundred.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,10 +71,12 @@
 			isa = PBXGroup;
 			children = (
 				B45608D921DBB5D700438EDA /* AppCoordinator.swift */,
-				E5C2D5F21F88FCC40069D77D /* GameGridViewController.swift */,
-				E5C2D6091F8945550069D77D /* GameGrid.swift */,
-				E524DF6C1F8BAC6B0072E3CC /* GridCell.swift */,
 				E5C2D5F41F88FCC40069D77D /* Game.storyboard */,
+				E5C2D5F21F88FCC40069D77D /* GameGridViewController.swift */,
+				B4EBA3AC21DD0A3E0058B0DC /* GridView.swift */,
+				E5C2D6091F8945550069D77D /* GameGrid.swift */,
+				B4EBA3AE21DD0DD90058B0DC /* Palette.swift */,
+				E524DF6C1F8BAC6B0072E3CC /* GridCell.swift */,
 				E554A9711F8EA531005CF827 /* UIButtonExtention.swift */,
 			);
 			path = Game;
@@ -222,6 +228,7 @@
 				E5C2D60A1F8945550069D77D /* GameGrid.swift in Sources */,
 				B45608DF21DBB5D700438EDA /* DateExtension.swift in Sources */,
 				B45608E121DBB5D700438EDA /* Label.swift in Sources */,
+				B4EBA3AF21DD0DD90058B0DC /* Palette.swift in Sources */,
 				E5C2D5F31F88FCC40069D77D /* GameGridViewController.swift in Sources */,
 				B45608E521DBB5D700438EDA /* AppCoordinator.swift in Sources */,
 				B45608DE21DBB5D700438EDA /* Month.swift in Sources */,
@@ -229,6 +236,7 @@
 				B45608DB21DBB5D700438EDA /* Coordinator.swift in Sources */,
 				B45608E421DBB5D700438EDA /* NavigationController.swift in Sources */,
 				B45608E321DBB5D700438EDA /* Button.swift in Sources */,
+				B4EBA3AD21DD0A3E0058B0DC /* GridView.swift in Sources */,
 				E524DF6D1F8BAC6B0072E3CC /* GridCell.swift in Sources */,
 				B45608E221DBB5D700438EDA /* ViewController.swift in Sources */,
 				B45608DA21DBB5D700438EDA /* AppDelegate.swift in Sources */,

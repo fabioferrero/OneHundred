@@ -17,13 +17,64 @@
                     <view key="view" contentMode="scaleToFill" id="i1E-w1-5bl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1a9-Bw-44k" customClass="GridView" customModule="OneHundred" customModuleProvider="target">
+                                <rect key="frame" x="19" y="165" width="337.5" height="337.5"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="1a9-Bw-44k" secondAttribute="height" multiplier="1:1" id="5eQ-MO-6a7"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XSR-Yp-mdU" customClass="Button" customModule="OneHundred" customModuleProvider="target">
+                                <rect key="frame" x="160" y="562.5" width="55" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <state key="normal" title="Reset"/>
+                                <connections>
+                                    <action selector="resetButtonTapped:" destination="NVs-6h-3cX" eventType="touchUpInside" id="xID-4L-BxH"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QOT-fQ-Bqq" customClass="Label" customModule="OneHundred" customModuleProvider="target">
+                                <rect key="frame" x="19" y="97" width="21" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tet-tR-86z" customClass="Button" customModule="OneHundred" customModuleProvider="target">
+                                <rect key="frame" x="326.5" y="91" width="30" height="48"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <state key="normal" title="⌫">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="NVs-6h-3cX" eventType="touchUpInside" id="oHS-rK-hCa"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XSR-Yp-mdU" firstAttribute="top" secondItem="1a9-Bw-44k" secondAttribute="bottom" constant="60" id="04I-EI-Qlf"/>
+                            <constraint firstItem="1a9-Bw-44k" firstAttribute="width" secondItem="i1E-w1-5bl" secondAttribute="width" multiplier="0.9" id="3h6-zf-FhO"/>
+                            <constraint firstItem="tet-tR-86z" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="QOT-fQ-Bqq" secondAttribute="trailing" constant="10" id="FIm-HN-2pa"/>
+                            <constraint firstItem="1a9-Bw-44k" firstAttribute="centerY" secondItem="i1E-w1-5bl" secondAttribute="centerY" id="IOt-wa-ZYU"/>
+                            <constraint firstItem="tet-tR-86z" firstAttribute="trailing" secondItem="1a9-Bw-44k" secondAttribute="trailing" id="Mb1-ch-BOw"/>
+                            <constraint firstItem="1a9-Bw-44k" firstAttribute="top" secondItem="tet-tR-86z" secondAttribute="centerY" constant="50" id="NWg-yn-aRz"/>
+                            <constraint firstItem="1a9-Bw-44k" firstAttribute="top" secondItem="QOT-fQ-Bqq" secondAttribute="centerY" constant="50" id="OSB-o8-M6K"/>
+                            <constraint firstItem="XSR-Yp-mdU" firstAttribute="centerX" secondItem="i1E-w1-5bl" secondAttribute="centerX" id="b2R-qO-G2N"/>
+                            <constraint firstItem="1a9-Bw-44k" firstAttribute="centerX" secondItem="i1E-w1-5bl" secondAttribute="centerX" id="faC-xH-ef1"/>
+                            <constraint firstItem="QOT-fQ-Bqq" firstAttribute="leading" secondItem="1a9-Bw-44k" secondAttribute="leading" id="wc5-4j-k7A"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Ina-ol-vpp"/>
                     </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="tet-tR-86z" id="9yt-xC-J7t"/>
+                        <outlet property="gridView" destination="1a9-Bw-44k" id="mvG-4c-KZG"/>
+                        <outlet property="resetButton" destination="XSR-Yp-mdU" id="Vfx-oJ-BQf"/>
+                        <outlet property="scoreLabel" destination="QOT-fQ-Bqq" id="KpW-Gk-laN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jlb-7T-5KK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="255" y="-4"/>
+            <point key="canvasLocation" x="253.59999999999999" y="-4.0479760119940034"/>
         </scene>
     </scenes>
 </document>

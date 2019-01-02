@@ -86,7 +86,7 @@ class GameGrid
     /**
      Create a new GameGrid with specified numberOfRows and numberOfColumns.
      */
-    init?(withRows numberOfRows: Int, andColumns numberOfColumns: Int)
+    init?(numberOfRows: Int, numberOfColumns: Int)
     {
         guard numberOfRows > 0 && numberOfColumns > 0 else {
             return nil
