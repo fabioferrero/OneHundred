@@ -26,16 +26,16 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XSR-Yp-mdU" customClass="Button" customModule="OneHundred" customModuleProvider="target">
-                                <rect key="frame" x="160" y="562.5" width="55" height="36"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <rect key="frame" x="158.5" y="562.5" width="58" height="38"/>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
                                 <state key="normal" title="Reset"/>
                                 <connections>
                                     <action selector="resetButtonTapped:" destination="NVs-6h-3cX" eventType="touchUpInside" id="xID-4L-BxH"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QOT-fQ-Bqq" customClass="Label" customModule="OneHundred" customModuleProvider="target">
-                                <rect key="frame" x="19" y="97" width="21" height="36"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="78" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QOT-fQ-Bqq" customClass="Label" customModule="OneHundred" customModuleProvider="target">
+                                <rect key="frame" x="19" y="95.5" width="41" height="39"/>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -50,14 +50,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HAR-fp-s9E">
-                                <rect key="frame" x="19" y="69.5" width="37" height="19.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <rect key="frame" x="19" y="66.5" width="35" height="21"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGd-vs-opA" customClass="Label" customModule="OneHundred" customModuleProvider="target">
-                                <rect key="frame" x="64" y="68.5" width="11" height="21"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGd-vs-opA" customClass="Label" customModule="OneHundred" customModuleProvider="target">
+                                <rect key="frame" x="60" y="65.5" width="30.5" height="22.5"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -73,7 +73,7 @@
                             <constraint firstItem="tet-tR-86z" firstAttribute="trailing" secondItem="1a9-Bw-44k" secondAttribute="trailing" id="Mb1-ch-BOw"/>
                             <constraint firstItem="1a9-Bw-44k" firstAttribute="top" secondItem="tet-tR-86z" secondAttribute="centerY" constant="50" id="NWg-yn-aRz"/>
                             <constraint firstItem="1a9-Bw-44k" firstAttribute="top" secondItem="QOT-fQ-Bqq" secondAttribute="centerY" constant="50" id="OSB-o8-M6K"/>
-                            <constraint firstItem="UGd-vs-opA" firstAttribute="leading" secondItem="HAR-fp-s9E" secondAttribute="trailing" constant="8" id="Pup-MH-tbr"/>
+                            <constraint firstItem="UGd-vs-opA" firstAttribute="leading" secondItem="HAR-fp-s9E" secondAttribute="trailing" constant="6" id="Pup-MH-tbr"/>
                             <constraint firstItem="QOT-fQ-Bqq" firstAttribute="top" secondItem="HAR-fp-s9E" secondAttribute="bottom" constant="8" id="RAC-Zt-vGq"/>
                             <constraint firstItem="XSR-Yp-mdU" firstAttribute="centerX" secondItem="i1E-w1-5bl" secondAttribute="centerX" id="b2R-qO-G2N"/>
                             <constraint firstItem="1a9-Bw-44k" firstAttribute="centerX" secondItem="i1E-w1-5bl" secondAttribute="centerX" id="faC-xH-ef1"/>
