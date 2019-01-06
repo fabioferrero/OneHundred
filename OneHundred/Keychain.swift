@@ -14,7 +14,8 @@ final class Keychain {
     
     /// A Key type representing all possible keys into the Keychain
     enum Key: CaseIterable {
-        case bestScore
+        case bestScore      // Int
+        case showTutorial   // Bool
         
         var code: String { return String(describing: self) }
     }

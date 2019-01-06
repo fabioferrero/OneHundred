@@ -32,6 +32,7 @@ final class GameGridViewController: ViewController {
         gridView.configure(numberOfRows: numberOfRows, numberOfColumns: numberOfColumns)
         gridView.delegate = self
         
+        scoreLabel.text = "0"
         bestScoreLabel.text = String(bestScore)
     }
     
