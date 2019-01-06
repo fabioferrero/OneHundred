@@ -10,7 +10,6 @@ import UIKit
 
 final class GameGridViewController: ViewController {
     
-    // The cell grid composed by one hundred buttons
     @IBOutlet private var gridView: GridView!
     
     @IBOutlet private var resetButton: Button!
@@ -18,25 +17,21 @@ final class GameGridViewController: ViewController {
     @IBOutlet private var cancelButton: Button!
     
     // MARK: - Model
+    private var gameGrid: GameGrid!
     
-    var gameGrid: GameGrid!
+    private var numberOfRows: Int = 10
+    private var numberOfColumns: Int = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Instanciate the model
         gameGrid = GameGrid(numberOfRows: numberOfRows, numberOfColumns: numberOfColumns)
         
         gridView.configure(numberOfRows: numberOfRows, numberOfColumns: numberOfColumns)
         gridView.delegate = self
     }
     
-    // MARK: - Controller
-    
-    var numberOfRows: Int = 10
-    var numberOfColumns: Int = 10
-    
-    var stopSolving = true
+    private var stopSolving = true
     
     private let mainQueue = DispatchQueue.main
     private let backgroudQueue = DispatchQueue.global(qos: .userInitiated)
@@ -46,11 +41,11 @@ final class GameGridViewController: ViewController {
     @IBAction func cancelButtonTapped(_ button: Button) {
         button.pulse()
         if let selectedCell = gameGrid.lastSelectedCell {
-            let cellButton = gridView.buttonForCell(selectedCell)
+            let cellButton = gridView.button(for: selectedCell)
             deactivateCell(selectedCell, forButton: cellButton)
             if let lastCell = gameGrid.lastSelectedCell {
                 lastCell.state = .active
-                gridView.buttonForCell(lastCell).backgroundColor = Colors.active
+                gridView.button(for: lastCell).backgroundColor = Colors.active
                 setPossibleCells(for: lastCell)
             } else {
                 selectedCell.state = .inactive
@@ -86,28 +81,24 @@ extension GameGridViewController {
         }
     }
     
-    /**
-     Update the view for all the possible cells with respect the given selected cell.
-     */
+    /// Update the view for all the possible cells with respect the given selected cell.
     private func setPossibleCells(for selectedCell: GridCell) {
         let possibleCells = gameGrid.possibleCells(forCell: selectedCell)
         for possibleCell in possibleCells {
             if possibleCell.state == .inactive {
-                let cellButton = gridView.buttonForCell(possibleCell)
+                let cellButton = gridView.button(for: possibleCell)
                 cellButton.backgroundColor = Colors.possible
                 possibleCell.state = .possible
             }
         }
     }
 
-    /**
-     Restore the view for all the possible cells with respect the given selected cell.
-     */
+    /// Restore the view for all the possible cells with respect the given selected cell.
     private func unsetPossibleCells(for selectedCell: GridCell) {
         let possibleCells = gameGrid.possibleCells(forCell: selectedCell)
         for possibleCell in possibleCells {
             if possibleCell.state == .possible {
-                let cellButton = gridView.buttonForCell(possibleCell)
+                let cellButton = gridView.button(for: possibleCell)
                 cellButton.backgroundColor = Colors.inactive
                 possibleCell.state = .inactive
             }
@@ -160,7 +151,7 @@ extension GameGridViewController {
                     // Backtrack
                     usleep(timeToPause)
                     mainQueue.sync {
-                        let cellButton = gridView.buttonForCell(lastCell)
+                        let cellButton = gridView.button(for: lastCell)
                         gridView.tapCell(cellButton)
                     }
                 } else {
@@ -171,7 +162,7 @@ extension GameGridViewController {
                 for cell in possibleCells {
                     if stopSolving { return }
                     mainQueue.sync {
-                        let cellButton = self.gridView.buttonForCell(cell)
+                        let cellButton = self.gridView.button(for: cell)
                         gridView.tapCell(cellButton)
                     }
                     usleep(timeToPause)
@@ -181,7 +172,7 @@ extension GameGridViewController {
                 // If all possible cells are already tried, backtrack
                 usleep(timeToPause)
                 mainQueue.sync {
-                    let cellButton = gridView.buttonForCell(lastCell)
+                    let cellButton = gridView.button(for: lastCell)
                     gridView.tapCell(cellButton)
                 }
             }
@@ -189,7 +180,7 @@ extension GameGridViewController {
             mainQueue.sync {
                 let randomFrom0To99 = Int.random(in: 0..<100)
                 let randomCell = self.gameGrid.cellAt(sequentialIndex: randomFrom0To99)!
-                let randomButton = self.gridView.buttonForCell(randomCell)
+                let randomButton = self.gridView.button(for: randomCell)
                 gridView.tapCell(randomButton)
             }
             usleep(timeToPause)
@@ -238,7 +229,7 @@ extension GameGridViewController: GridViewDelegate {
             case .possible:
                 if let lastCell = gameGrid.lastSelectedCell {
                     lastCell.state = .used
-                    gridView.buttonForCell(lastCell).backgroundColor = Colors.used
+                    gridView.button(for: lastCell).backgroundColor = Colors.used
                     unsetPossibleCells(for: lastCell)
                 }
                 activateCell(selectedCell, forButton: button)
@@ -246,7 +237,7 @@ extension GameGridViewController: GridViewDelegate {
                 deactivateCell(selectedCell, forButton: button)
                 if let lastCell = gameGrid.lastSelectedCell {
                     lastCell.state = .active
-                    gridView.buttonForCell(lastCell).backgroundColor = Colors.active
+                    gridView.button(for: lastCell).backgroundColor = Colors.active
                     setPossibleCells(for: lastCell)
                 } else {
                     selectedCell.state = .inactive

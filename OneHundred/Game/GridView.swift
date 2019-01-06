@@ -77,7 +77,7 @@ final class GridView: UIView {
 extension GridView {
     
     /// Returns the button in the view that is related to the given cell in the model.
-    func buttonForCell(_ cell: GridCell) -> Button {
+    func button(for cell: GridCell) -> Button {
         let stackView = grid.arrangedSubviews[cell.row] as! UIStackView
         let cellButton = stackView.arrangedSubviews[cell.column] as! Button
         return cellButton
