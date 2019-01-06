@@ -44,6 +44,7 @@ final class GridView: UIView {
             let stackView = UIStackView()
             for _ in 0..<numberOfColumns {
                 let button = Button()
+                button.layer.cornerRadius = 2
                 button.backgroundColor = Colors.inactive
                 button.accessibilityIdentifier = String(cellCount)
                 cellCount += 1
