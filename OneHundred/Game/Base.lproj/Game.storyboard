@@ -49,23 +49,41 @@
                                     <action selector="cancelButtonTapped:" destination="NVs-6h-3cX" eventType="touchUpInside" id="oHS-rK-hCa"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HAR-fp-s9E">
+                                <rect key="frame" x="19" y="69.5" width="37" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGd-vs-opA" customClass="Label" customModule="OneHundred" customModuleProvider="target">
+                                <rect key="frame" x="64" y="68.5" width="11" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="XSR-Yp-mdU" firstAttribute="top" secondItem="1a9-Bw-44k" secondAttribute="bottom" constant="60" id="04I-EI-Qlf"/>
+                            <constraint firstItem="tet-tR-86z" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="UGd-vs-opA" secondAttribute="trailing" id="0qG-t7-Ttx"/>
                             <constraint firstItem="1a9-Bw-44k" firstAttribute="width" secondItem="i1E-w1-5bl" secondAttribute="width" multiplier="0.9" id="3h6-zf-FhO"/>
+                            <constraint firstItem="HAR-fp-s9E" firstAttribute="leading" secondItem="QOT-fQ-Bqq" secondAttribute="leading" id="Bwd-Ho-7VI"/>
                             <constraint firstItem="tet-tR-86z" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="QOT-fQ-Bqq" secondAttribute="trailing" constant="10" id="FIm-HN-2pa"/>
                             <constraint firstItem="1a9-Bw-44k" firstAttribute="centerY" secondItem="i1E-w1-5bl" secondAttribute="centerY" id="IOt-wa-ZYU"/>
                             <constraint firstItem="tet-tR-86z" firstAttribute="trailing" secondItem="1a9-Bw-44k" secondAttribute="trailing" id="Mb1-ch-BOw"/>
                             <constraint firstItem="1a9-Bw-44k" firstAttribute="top" secondItem="tet-tR-86z" secondAttribute="centerY" constant="50" id="NWg-yn-aRz"/>
                             <constraint firstItem="1a9-Bw-44k" firstAttribute="top" secondItem="QOT-fQ-Bqq" secondAttribute="centerY" constant="50" id="OSB-o8-M6K"/>
+                            <constraint firstItem="UGd-vs-opA" firstAttribute="leading" secondItem="HAR-fp-s9E" secondAttribute="trailing" constant="8" id="Pup-MH-tbr"/>
+                            <constraint firstItem="QOT-fQ-Bqq" firstAttribute="top" secondItem="HAR-fp-s9E" secondAttribute="bottom" constant="8" id="RAC-Zt-vGq"/>
                             <constraint firstItem="XSR-Yp-mdU" firstAttribute="centerX" secondItem="i1E-w1-5bl" secondAttribute="centerX" id="b2R-qO-G2N"/>
                             <constraint firstItem="1a9-Bw-44k" firstAttribute="centerX" secondItem="i1E-w1-5bl" secondAttribute="centerX" id="faC-xH-ef1"/>
+                            <constraint firstItem="UGd-vs-opA" firstAttribute="centerY" secondItem="HAR-fp-s9E" secondAttribute="centerY" id="qIX-aC-EDW"/>
                             <constraint firstItem="QOT-fQ-Bqq" firstAttribute="leading" secondItem="1a9-Bw-44k" secondAttribute="leading" id="wc5-4j-k7A"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ina-ol-vpp"/>
                     </view>
                     <connections>
+                        <outlet property="bestScoreLabel" destination="UGd-vs-opA" id="oxs-yg-oQd"/>
                         <outlet property="cancelButton" destination="tet-tR-86z" id="9yt-xC-J7t"/>
                         <outlet property="gridView" destination="1a9-Bw-44k" id="mvG-4c-KZG"/>
                         <outlet property="resetButton" destination="XSR-Yp-mdU" id="Vfx-oJ-BQf"/>

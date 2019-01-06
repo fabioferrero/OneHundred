@@ -10,11 +10,13 @@ import UIKit
 
 final class GameGridViewController: ViewController {
     
-    @IBOutlet private var gridView: GridView!
+    @IBOutlet private weak var gridView: GridView!
     
-    @IBOutlet private var resetButton: Button!
-    @IBOutlet private var scoreLabel: Label!
-    @IBOutlet private var cancelButton: Button!
+    @IBOutlet private weak var scoreLabel: Label!
+    @IBOutlet private weak var bestScoreLabel: Label!
+    
+    @IBOutlet private weak var resetButton: Button!
+    @IBOutlet private weak var cancelButton: Button!
     
     // MARK: - Model
     private var gameGrid: GameGrid!
@@ -31,7 +33,9 @@ final class GameGridViewController: ViewController {
         gridView.delegate = self
     }
     
-    private var stopSolving = true
+    private var bestScore: Int = 0
+    
+    private var stopSolving: Bool = true
     
     private let mainQueue = DispatchQueue.main
     private let backgroudQueue = DispatchQueue.global(qos: .userInitiated)
