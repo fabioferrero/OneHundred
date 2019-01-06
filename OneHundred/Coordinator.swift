@@ -6,10 +6,10 @@
 //  Copyright © 2018 Fabio Ferrero. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol Coordinator: class {
-    var navigationController: NavigationController { get set }
+    var window: UIWindow { get set }
     var children: [Coordinator] { get set }
     func start()
 }

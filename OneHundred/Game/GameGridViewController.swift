@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol GameGridViewControllerDelegate: class {
+    func gameGridViewControllerDidAppear(_ gameGridViewController: GameGridViewController)
+    func gameGridViewControllerDidTapOnTutorial(_ gameGridViewController: GameGridViewController)
+}
+
 final class GameGridViewController: ViewController {
+    
+    weak var delegate: GameGridViewControllerDelegate?
     
     @IBOutlet private weak var gridView: GridView!
     
@@ -34,6 +41,11 @@ final class GameGridViewController: ViewController {
         
         scoreLabel.text = "0"
         bestScoreLabel.text = String(bestScore)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        delegate?.gameGridViewControllerDidAppear(self)
     }
     
     private var bestScore: Int {
@@ -76,6 +88,10 @@ final class GameGridViewController: ViewController {
         scoreCounter = 0
         gameGrid.selectionHistory.removeAll()
         gridView.reset()
+    }
+    
+    @IBAction func userDidTapOnTutorial() {
+        delegate?.gameGridViewControllerDidTapOnTutorial(self)
     }
 }
 
