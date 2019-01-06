@@ -31,9 +31,20 @@ final class GameGridViewController: ViewController {
         
         gridView.configure(numberOfRows: numberOfRows, numberOfColumns: numberOfColumns)
         gridView.delegate = self
+        
+        bestScoreLabel.text = String(bestScore)
     }
     
-    private var bestScore: Int = 0
+    private var bestScore: Int {
+        get {
+            let bestScore: Int = Keychain.value(for: .bestScore) ?? 0
+            return bestScore
+        }
+        set {
+            Keychain.set(value: newValue, for: .bestScore)
+            bestScoreLabel.text = String(newValue)
+        }
+    }
     
     private var stopSolving: Bool = true
     
@@ -82,6 +93,10 @@ extension GameGridViewController {
         set {
             gameGrid.gameScore = newValue
             scoreLabel.text = String(newValue)
+            
+            if newValue > bestScore {
+                bestScore = newValue
+            }
         }
     }
     
