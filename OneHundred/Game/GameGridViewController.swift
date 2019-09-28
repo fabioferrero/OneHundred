@@ -24,6 +24,9 @@ final class GameGridViewController: ViewController {
     
     @IBOutlet private weak var resetButton: Button!
     @IBOutlet private weak var cancelButton: Button!
+    #if DEBUG
+    @IBOutlet private weak var solveButton: Button!
+    #endif
     
     // MARK: - Model
     private var gameGrid: GameGrid!
@@ -33,6 +36,10 @@ final class GameGridViewController: ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        #if DEBUG
+        solveButton.isHidden = true
+        #endif
         
         gameGrid = GameGrid(numberOfRows: numberOfRows, numberOfColumns: numberOfColumns)
         
@@ -88,6 +95,34 @@ final class GameGridViewController: ViewController {
         scoreCounter = 0
         gameGrid.selectionHistory.removeAll()
         gridView.reset()
+    }
+    
+    @IBAction func userDidTapSolve(_ button: Button) {
+        #if DEBUG
+        if !stopSolving {   // the game is actually solving (not stopped)
+            stopSolving = true
+            //            solveButton.setTitle("Solve", for: .normal)
+            //            solveButton.setTitleColor(UIColor.green, for: .normal)
+            //            solveButton.layer.borderColor = UIColor.green.cgColor
+            //            spinIndicator.stopAnimating()
+            //            solutionLoadingLabel.isHidden = true
+        } else {            // the game is not solving (is stopped)
+            backgroudQueue.async {
+                self.solveGameGraphically()
+                //                self.gameGrid.findASolution {
+                //                    print(self.gameGrid.selectionHistory.map {
+                //                        "(\($0.row),\($0.column))"
+                //                    })
+                //                }
+            }
+            stopSolving = false
+            //            solveButton.setTitle("Stop", for: .normal)
+            //            solveButton.setTitleColor(UIColor.red, for: .normal)
+            //            solveButton.layer.borderColor = UIColor.red.cgColor
+            //            spinIndicator.startAnimating()
+            //            solutionLoadingLabel.isHidden = false
+        }
+        #endif
     }
     
     @IBAction func userDidTapOnTutorial() {
@@ -221,35 +256,6 @@ extension GameGridViewController {
             }
             usleep(timeToPause)
             solveGameGraphically()
-        }
-    }
-    
-    // MARK: - Button's actions
-    
-    /// The method to exeute when the "solve" button is tapped
-    @objc func tapSolve(_ button: Button) {
-        if !stopSolving {   // the game is actually solving (not stopped)
-            stopSolving = true
-//            solveButton.setTitle("Solve", for: .normal)
-//            solveButton.setTitleColor(UIColor.green, for: .normal)
-//            solveButton.layer.borderColor = UIColor.green.cgColor
-//            spinIndicator.stopAnimating()
-//            solutionLoadingLabel.isHidden = true
-        } else {            // the game is not solving (is stopped)
-            backgroudQueue.async {
-                self.solveGameGraphically()
-//                self.gameGrid.findASolution {
-//                    print(self.gameGrid.selectionHistory.map {
-//                        "(\($0.row),\($0.column))"
-//                    })
-//                }
-            }
-            stopSolving = false
-//            solveButton.setTitle("Stop", for: .normal)
-//            solveButton.setTitleColor(UIColor.red, for: .normal)
-//            solveButton.layer.borderColor = UIColor.red.cgColor
-//            spinIndicator.startAnimating()
-//            solutionLoadingLabel.isHidden = false
         }
     }
 }

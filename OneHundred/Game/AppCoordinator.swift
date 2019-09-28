@@ -22,6 +22,15 @@ final class AppCoordinator: Coordinator {
         gameGridViewController.delegate = self
         window.rootViewController = gameGridViewController
     }
+    
+    private var shouldShowTutorial: Bool {
+        get {
+            return Keychain.value(for: .showTutorial) ?? true
+        }
+        set {
+            Keychain.set(value: newValue, for: .showTutorial)
+        }
+    }
 }
 
 // MARK: - GameGridViewController Delegate
@@ -29,17 +38,25 @@ final class AppCoordinator: Coordinator {
 extension AppCoordinator: GameGridViewControllerDelegate {
     
     func gameGridViewControllerDidAppear(_ gameGridViewController: GameGridViewController) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            let tutorialViewController = TutorialViewController.instantiate()
-            tutorialViewController.delegate = self
-            gameGridViewController.present(tutorialViewController, animated: true)
+        if shouldShowTutorial {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.presentTutorial(from: gameGridViewController)
+            }
+            shouldShowTutorial = false
         }
     }
     
     func gameGridViewControllerDidTapOnTutorial(_ gameGridViewController: GameGridViewController) {
+        presentTutorial(from: gameGridViewController)
+    }
+}
+
+extension AppCoordinator {
+    
+    private func presentTutorial(from viewController: ViewController) {
         let tutorialViewController = TutorialViewController.instantiate()
         tutorialViewController.delegate = self
-        gameGridViewController.present(tutorialViewController, animated: true)
+        viewController.present(tutorialViewController, animated: true)
     }
 }
 

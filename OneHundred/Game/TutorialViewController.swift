@@ -16,6 +16,8 @@ final class TutorialViewController: ViewController {
     
     weak var delegate: TutorialViewControllerDelegate?
     
+    // MARK: - Actions
+    
     @IBAction func userDidTapOnClose(_ button: Button) {
         delegate?.tutorialViewControllerDidTapOnClose(self)
     }
